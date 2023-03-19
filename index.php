@@ -37,7 +37,18 @@ try {
 
 
 
-$filmStatement = $db->prepare('SELECT * FROM film');
+$filmStatement = $db->prepare(
+    'SELECT
+                film.titre_film,
+                film.annee_sortie_film,
+                TIME_FORMAT(SEC_TO_TIME(film.duree_film * 60), "%H:%i") AS duree_film,
+                personne.prenom_personne,
+                personne.nom_personne
+            FROM
+            film
+                INNER JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur
+                INNER JOIN personne ON realisateur.id_personne = personne.id_personne'
+);
 
 $filmStatement->execute();
 
@@ -45,61 +56,13 @@ $films = $filmStatement->fetchAll();
 
 // Chargement automatique des classes
 
-//spl_autoload_register(function ($class_name){
-//    require str_replace("\\","/", $class_name) . ".php";
-//});
+spl_autoload_register(function ($class_name){
+    require str_replace("\\","/", $class_name) . ".php";
+});
 
-//$realisateurs = [
-//    [
-//        'nom'=>'Allen',
-//        'prenom'=> 'Woody',
-//        'sexe'=>'1936'
-//    ],
-//    [
-//        'nom'=>'Streep',
-//        'prenom'=> 'Meryl',
-//        'sexe'=>'1946'
-//    ],
-//];
-//
-//$films = [
-//    [
-//        'titre'=>'Manhattan',
-//        'annee'=> '1979',
-//        'duree'=>'96',
-//        'realisateur'=> $realisateurs[0]
-//    ],
-//    [
-//        'titre'=>'Kramer contre Kramer',
-//        'annee'=>'1979',
-//        'duree'=>'105',
-//        'realisateur'=> $realisateurs[1]
-//    ],
-//];
-//
-//
-//
-//
-
+//afficher les films
 function displayFilm($films){
-    foreach ($films as $film){
-        //lire le realisateur
-
-        //affichage
-        echo '<tr>
-                   <td>'.$film['titre_film'].'</td>
-                   <td>'.$film['annee_sortie_film'].'</td>
-                   <td>'.$film['duree_film'].'</td>
-               </tr>
-        ';
-    }
-}
-//
-//
-//?>
-<!---->
-
-<main>
+    echo '
     <section>
         <h2>Mes films</h2>
         <div>
@@ -113,16 +76,33 @@ function displayFilm($films){
                 </tr>
                 </thead>
                 <tbody>
-
-                    <?php
-                    displayFilm($films);
-                    ?>
-
-                </tbody>
+    ';
+    //boucle sur chaque film
+    foreach ($films as $film){
+        echo '<tr>
+                   <td>'.$film['titre_film'].'</td>
+                   <td>'.$film['annee_sortie_film'].'</td>
+                   <td>'.$film['duree_film'].'</td>
+                   <td>'.$film['prenom_personne'].' '.$film['nom_personne'].'</td>
+               </tr>
+        ';
+    }
+    echo '
+                    </tbody>
             </table>
         </div>
     </section>
+    ';
+}
 
+//?>
+
+<!---->
+
+<main>
+    <?php
+    displayFilm($films);
+    ?>
 
 </main>
 
