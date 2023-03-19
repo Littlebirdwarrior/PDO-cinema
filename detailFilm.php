@@ -6,22 +6,16 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Exercice cinema</title>
+    <title>details des films</title>
     <link rel="stylesheet" href="styles.css"></link>
 </head>
 <!----------->
 <body>
 <header>
-    <h1>Exercice cinéma</h1>
+    <h1>details des films</h1>
 </header>
 
 <?php
-
-//// Chargement automatique des classes
-//
-//spl_autoload_register(function ($class_name){
-//    require str_replace("\\","/", $class_name) . ".php";
-//});
 
 //Chargement de la BDD
 try {
@@ -48,64 +42,68 @@ $filmStatement = $db->prepare(
                 film.titre_film,
                 film.annee_sortie_film,
                 TIME_FORMAT(SEC_TO_TIME(film.duree_film * 60), "%H:%i") AS duree_film,
+                film.synopsis_film,
+                film.note_film,
+                film.affiche_film,
                 personne.prenom_personne,
                 personne.nom_personne
             FROM
             film
                 INNER JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur
-                INNER JOIN personne ON realisateur.id_personne = personne.id_personne'
+                INNER JOIN personne ON realisateur.id_personne = personne.id_personne
+                '
 );
 
 $filmStatement->execute();
 
 $films = $filmStatement->fetchAll();
 
+// Chargement automatique des classes
+
+//spl_autoload_register(function ($class_name){
+//    require str_replace("\\","/", $class_name) . ".php";
+//});
 
 //afficher les films
-function displayFilm($films){
-    echo '
-    <section>
-        <h2>Mes films</h2>
-        <div>
-            <table>
-                <thead>
-                <tr>
-                    <th>Titre</th>
-                    <th>Année</th>
-                    <th>Durée</th>
-                    <th>Réalisateur</th>
-                </tr>
-                </thead>
-                <tbody>
-    ';
-    //boucle sur chaque film
-    foreach ($films as $film){
-        echo '<tr>
-                   <td>'.$film['titre_film'].'</td>
-                   <td>'.$film['annee_sortie_film'].'</td>
-                   <td>'.$film['duree_film'].'</td>
-                   <td>'.$film['prenom_personne'].' '.$film['nom_personne'].'</td>
-               </tr>
+function detailFilm($films){
+    echo '<section>';
+    //boucle
+    foreach($films as $film){
+        echo '
+         <div>
+            <div>
+                <h2>'.$film['titre_film'].'</h2>
+                <figure>
+                <img src="'.$film['affiche_film'].'" alt="affiche '.$film['titre_film'].'" width="100px" height="138px"/>
+                </figure>  
+            </div>
+            <div>
+                <ul>
+                    <li>Note: '.$film['note_film'].'</li>
+                    <li>Année de sortie: '.$film['annee_sortie_film'].'</li>
+                    <li>Réaliser par : '.$film['prenom_personne'].' '.$film['nom_personne'].'</li>
+                    <li>Avec : </li>
+                    <li>Durée: '.$film['duree_film'].'</li>
+                    <li>Synopsis : '.$film['synopsis_film'].'</li>
+                </ul>
+            </div>
+        </div>
         ';
     }
-    echo '
-                    </tbody>
-            </table>
-        </div>
-    </section>
-    ';
+    echo '</section>';
 }
 
 //?>
 
-<!--Affichage-->
+<!---->
 
 <main>
     <?php
-    displayFilm($films);
+    detailFilm($films);
     ?>
 
 </main>
 
 </body>
 </html>
+
