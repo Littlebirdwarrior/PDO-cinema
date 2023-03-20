@@ -24,16 +24,12 @@
 //});
 
 //Chargement de la BDD
-try {
-    $db = new PDO(
-        'mysql:host=localhost;dbname=cinema;charset=utf8',
-        'root',
-        'root'
-    );
-
-}catch (Exception $e){
-    die('Erreur :'.$e->getMessage());
-}
+$db = new PDO(
+    'mysql:host=localhost;dbname=cinema;charset=utf8',
+    'root',
+    'root',
+    [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+);
 
 /*
  * Lorsque votre site sera en ligne, vous aurez sûrement un nom d'hôte différent, ainsi qu'un identifiant et un mot de passe, comme ceci :
@@ -41,10 +37,7 @@ try {
     $db = new PDO('mysql:host=sql.hebergeur.com;dbname=mabase;charset=utf8', 'pierre.durand', 's3cr3t');
     ?>*/
 
-
-
-$filmStatement = $db->prepare(
-    'SELECT
+$sqlQuery = 'SELECT
                 film.titre_film,
                 film.annee_sortie_film,
                 TIME_FORMAT(SEC_TO_TIME(film.duree_film * 60), "%H:%i") AS duree_film,
@@ -53,8 +46,9 @@ $filmStatement = $db->prepare(
             FROM
             film
                 INNER JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur
-                INNER JOIN personne ON realisateur.id_personne = personne.id_personne'
-);
+                INNER JOIN personne ON realisateur.id_personne = personne.id_personne';
+
+$filmStatement = $db->prepare($sqlQuery);
 
 $filmStatement->execute();
 
@@ -79,9 +73,10 @@ function displayFilm($films){
                 <tbody>
     ';
     //boucle sur chaque film
+    //a ajouter apres construction scession
     foreach ($films as $film){
         echo '<tr>
-                   <td>'.$film['titre_film'].'</td>
+                   <td><a href="#">'.$film['titre_film'].'</a></td>
                    <td>'.$film['annee_sortie_film'].'</td>
                    <td>'.$film['duree_film'].'</td>
                    <td>'.$film['prenom_personne'].' '.$film['nom_personne'].'</td>
