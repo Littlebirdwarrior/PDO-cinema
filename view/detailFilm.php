@@ -1,41 +1,44 @@
 <?php
-ob_start();?>
 
-<p>Il y a <?=$requete->rowCount()?>films</p>
+//requete
+$sqlQuery = 'SELECT
+                film.titre_film,
+                film.annee_sortie_film,
+                TIME_FORMAT(SEC_TO_TIME(film.duree_film * 60), "%H:%i") AS duree_film,
+                personne.prenom_personne,
+                personne.nom_personne
+            FROM
+            film
+                INNER JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur
+                INNER JOIN personne ON realisateur.id_personne = personne.id_personne';
 
-    <section>
-        <h2>Mes films</h2>
-        <div>
-            <table>
-                <thead>
-                <tr>
-                    <th>Titre</th>
-                    <th>Année</th>
-                    <th>Durée</th>
-                    <th>Réalisateur</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-                //boucle sur chaque film
-                //a ajouter apres construction scession
-                foreach ($requete->fetchAll() as $film){
-                    echo '<tr>
-                                   <td><a href="#">'.$film['titre_film'].'</a></td>
-                                   <td>'.$film['annee_sortie_film'].'</td>
-                                   <td>'.$film['duree_film'].'</td>
-                                   <td>'.$film['prenom_personne'].' '.$film['nom_personne'].'</td>
-                               </tr>
-                        ';
-                }
-                ?>
-                    </tbody>
-            </table>
+
+//affichage
+function detailFilm($films){
+    echo '<section>';
+    //boucle
+    foreach($films as $film){
+        echo '
+         <div>
+            <div>
+                <h2>'.$film['titre_film'].'</h2>
+                <figure>
+                <img src="'.$film['affiche_film'].'" alt="affiche '.$film['titre_film'].'" width="100px" height="138px"/>
+                </figure>  
+            </div>
+            <div>
+                <ul>
+                    <li>Note: '.$film['note_film'].'</li>
+                    <li>Année de sortie: '.$film['annee_sortie_film'].'</li>
+                    <li>Réaliser par : '.$film['prenom_personne'].' '.$film['nom_personne'].'</li>
+                    <li>Avec : </li>
+                    <li>Durée: '.$film['duree_film'].'</li>
+                    <li>Synopsis : '.$film['synopsis_film'].'</li>
+                </ul>
+            </div>
         </div>
-    </section>
-
-<?php
-$titre = "liste des films";
-$titre_secondaire= "Liste des films";
-$contenu = ob_end_clean();
-require "view/template.php";
+        ';
+    }
+    echo '</section>';
+}
+?>
