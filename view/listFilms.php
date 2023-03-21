@@ -1,7 +1,7 @@
 <?php
 ob_start();?>
 
-    <p>Il y a <?=$requete->rowCount()?>films</p>
+    <p>Il y a <?=$requete->rowCount()?> films</p>
 
     <section>
         <h2>Mes films</h2>
@@ -13,6 +13,7 @@ ob_start();?>
                     <th>Année</th>
                     <th>Durée</th>
                     <th>Réalisateur</th>
+                    <th>Notes</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -25,6 +26,7 @@ ob_start();?>
                                    <td>'.$film['annee_sortie_film'].'</td>
                                    <td>'.$film['duree_film'].'</td>
                                    <td>'.$film['prenom_personne'].' '.$film['nom_personne'].'</td>
+                                   <td>'.$film['note_film'].'</td>
                                </tr>
                         ';
                 }
@@ -37,5 +39,5 @@ ob_start();?>
 <?php
 $titre = "liste des films";
 $titre_secondaire= "Liste des films";
-$contenu = ob_end_clean();
+$contenu = ob_get_clean();
 require "view/template.php";

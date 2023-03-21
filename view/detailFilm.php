@@ -1,6 +1,9 @@
 <?php
+ob_start();?>
 
-//requete
+<p>Il y a <?=$requete->rowCount()?>films</p>
+
+<!-----requete
 $sqlQuery = 'SELECT
                 film.titre_film,
                 film.annee_sortie_film,
@@ -10,12 +13,11 @@ $sqlQuery = 'SELECT
             FROM
             film
                 INNER JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur
-                INNER JOIN personne ON realisateur.id_personne = personne.id_personne';
+                INNER JOIN personne ON realisateur.id_personne = personne.id_personne';---->
 
 
-//affichage
-function detailFilm($films){
-    echo '<section>';
+<section>
+    <?php
     //boucle
     foreach($films as $film){
         echo '
@@ -38,7 +40,11 @@ function detailFilm($films){
             </div>
         </div>
         ';
-    }
-    echo '</section>';
-}
-?>
+    } ?>
+</section>
+
+<?php
+$titre = "détail d'un film";
+$titre_secondaire = "Détail d'un film";
+$contenu = ob_get_clean();
+require "view/template.php";
