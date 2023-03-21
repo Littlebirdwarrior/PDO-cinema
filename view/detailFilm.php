@@ -1,25 +1,11 @@
 <?php
-ob_start();?>
-
-<p>Il y a <?=$requete->rowCount()?>films</p>
-
-<!-----requete
-$sqlQuery = 'SELECT
-                film.titre_film,
-                film.annee_sortie_film,
-                TIME_FORMAT(SEC_TO_TIME(film.duree_film * 60), "%H:%i") AS duree_film,
-                personne.prenom_personne,
-                personne.nom_personne
-            FROM
-            film
-                INNER JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur
-                INNER JOIN personne ON realisateur.id_personne = personne.id_personne';---->
-
+ob_start();
+?>
 
 <section>
     <?php
     //boucle
-    foreach($films as $film){
+    foreach($requete->fetchAll() as $film){
         echo '
          <div>
             <div>
@@ -41,6 +27,7 @@ $sqlQuery = 'SELECT
         </div>
         ';
     } ?>
+
 </section>
 
 <?php

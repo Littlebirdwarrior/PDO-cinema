@@ -6,9 +6,7 @@ use Model\Connect;
 
 
 class CinemaController {
-    //lister les film
-
-  
+    //lister les films  
     public function listFilms(){
         $pdo = Connect::seConnecter();
 
@@ -28,23 +26,32 @@ class CinemaController {
 
     require "view/listFilms.php";
     }
-}
+    
+    //afficher le detail des films
+    public function detailFilm($id){
+        $pdo = Connect::seConnecter();
+            $requeteDetailFilm = $pdo->query('
+        SELECT
+            film.titre_film,
+            film.annee_sortie_film,
+            TIME_FORMAT(SEC_TO_TIME(film.duree_film * 60), "%H:%i") AS duree_film,
+            film.synopsis_film,
+            personne.prenom_personne,
+            personne.nom_personne,
+            film.affiche_film,
+            film.note_film
+        FROM
+        film
+            INNER JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur
+            INNER JOIN personne ON realisateur.id_personne = personne.id_personne
+        WHERE film.id_film = :id 
+    ');
+    $requeteDetailFilm->execute(["id" => $id]);//ici, quelque chose ne marche pas
 
+    require "view/detailFilm.php";        
+    }
 
-// use Controller\CinemaController;
+    }//fin controller
 
-// //On autocharge les classes du projet 
-// spl_autoload_register(function($class_name){
-//    include $class_name . 'php';
-// });
-
-// $ctrlCinema = new CinemaController();
-
-// if(isset($GET["action"])){
-//    switch ($_GET["action"]){
-//        case "listFilms" : $ctrlCinema->listFilms(); break;
-//        case "listActeurs" : $ctrlCinema->listActeurs(); break;
-//    }
-// }
 
 

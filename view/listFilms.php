@@ -1,7 +1,8 @@
 <?php
-ob_start();?>
-
-    <p>Il y a <?=$requete->rowCount()?> films</p>
+ob_start();//démarre session et créé tempon, capsule qui enregistre tout ce qui suit en string
+?> 
+    <!--Compte des film-->
+    <p>Il y a <?=$requeteDetailFilm->rowCount()?> films</p>
 
     <section>
         <h2>Mes films</h2>
@@ -18,9 +19,9 @@ ob_start();?>
                 </thead>
                 <tbody>
                 <?php
-                //boucle sur chaque film
-                //a ajouter apres construction scession
-                foreach ($requete->fetchAll() as $film){
+                //boucle sur chaque films
+            
+                foreach ($requeteDetailFilm->fetchAll() as $film){
                     echo '<tr>
                                    <td><a href="#">'.$film['titre_film'].'</a></td>
                                    <td>'.$film['annee_sortie_film'].'</td>
@@ -39,5 +40,5 @@ ob_start();?>
 <?php
 $titre = "liste des films";
 $titre_secondaire= "Liste des films";
-$contenu = ob_get_clean();
+$contenu = ob_get_clean();//envois le tempons dans la session
 require "view/template.php";
