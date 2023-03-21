@@ -15,7 +15,7 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : null;//ici, quelque chose ne marche p
 
 //Définitions des instances
 $ctrlCinema = new CinemaController();
-$ctrlActeur = new ActeurController();
+$ctrlActeurs = new ActeurController();
 
 //Traitements des différents retours de l'action
 

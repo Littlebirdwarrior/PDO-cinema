@@ -14,7 +14,7 @@ class CinemaController
     {
         $pdo = Connect::seConnecter();
 
-        $requeteListFilm = $pdo->query('
+        $requeteListFilms = $pdo->query('
         SELECT
                 film.titre_film,
                 film.annee_sortie_film,
@@ -31,7 +31,7 @@ class CinemaController
         require "view/listFilms.php";
     }
 
-    //afficher le detail des films
+    //afficher le detail des films (nb, avec un id, utiliser la méthode prépare et non query)
     public function detailFilm($id)
     {
         $pdo = Connect::seConnecter();
@@ -51,7 +51,7 @@ class CinemaController
             INNER JOIN personne ON realisateur.id_personne = personne.id_personne
             WHERE film.id_film = :id
             ');
-            $requeteDetailFilm->execute(["id" => $id]);//ici, quelque chose ne marche pas
+            $requeteDetailFilm->execute(["id" => $id]);
           
 
         require "view/detailFilm.php";
