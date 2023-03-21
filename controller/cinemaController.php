@@ -70,7 +70,7 @@ class CinemaController
                 //Fitrage des données
                 $pdo = Connect::seConnecter();
 
-                //Les filtre pour eviter les failles XSS
+                //Les filtre pour eviter les failles XSS (sans image)
                 $titreFilm = filter_input(INPUT_POST, "titreFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                 $synopsisFilm = filter_input(INPUT_POST, "synopsisFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                 $anneeSortieFilm = filter_input(INPUT_POST, "anneeSortieFilm", FILTER_VALIDATE_INT);
@@ -80,10 +80,10 @@ class CinemaController
                 $genreFilm = filter_input(INPUT_POST, "genreFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                 //il manque les images
 
-                //ici prépare les films 
+                //ici prépare les films (il manque les images)
                 $requeteAddfilm = $pdo->prepare("
                         INSERT INTO film (titre_film, synopsis_film, annee_sortie_film, duree_film,  note_film, id_realisateur, genre_film) 
-                        VALUES (:titreFilm, :synopsisFilm, :anneeSortieFilm,  :noteFilm, :realisateurFilm)
+                        VALUES (:titreFilm, :synopsisFilm, :anneeSortieFilm,  :dureeFilm,  :notefilm, :idRealisateur, :genreFilm)
                         ");
 
                 //On récupère le dernier ID rentré dans la BDD
