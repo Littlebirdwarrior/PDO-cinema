@@ -2,6 +2,7 @@
 
 //Appel des controller
 use Controller\CinemaController;
+use Controller\ActeurController;
 
 //chargement automatique de toutes les classes .php
 spl_autoload_register(function ($classname){
@@ -10,10 +11,11 @@ spl_autoload_register(function ($classname){
 });
 
 //Récupération de l'id
-$id = (isset($_GET["id"])) ? $_GET["id"] : null;
+$id = (isset($_GET["id"])) ? $_GET["id"] : null;//ici, quelque chose ne marche pas
 
 //Définitions des instances
 $ctrlCinema = new CinemaController();
+$ctrlActeur = new ActeurController();
 
 //Traitements des différents retours de l'action
 
@@ -23,7 +25,19 @@ if(isset($_GET["action"])){
         case "listFilms" : 
             $ctrlCinema ->listFilms(); break;
         case "detailFilm" :
-            $ctrlCinema ->detailFilm($id); break;
+            $ctrlCinema ->detailFilm($id); break;//ici quelque chose ne marche pas
+            
+        //Acteurs
+        case "listActeurs":
+             $ctrlActeurs-> listActeurs(); break;
+
+        //Realisateurs
+
+        //Roles
+
+        //Casting
+
+        //Genres
     }
 }
 
