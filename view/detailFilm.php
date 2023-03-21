@@ -5,7 +5,7 @@ ob_start();
 <section>
     <?php
     //boucle
-    foreach($requete->fetchAll() as $film){
+    foreach($requeteDetailFilm->fetchAll() as $film){
         echo '
          <div>
             <div>
