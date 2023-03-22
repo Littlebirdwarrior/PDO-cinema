@@ -78,10 +78,38 @@ class CinemaController
             INNER JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur
             INNER JOIN personne ON realisateur.id_personne = personne.id_personne
             WHERE film.id_film = :id
+            GROUP BY film.id_film
             ');
-            $requeteDetailFilm->execute(["id" => $id]);
-        
+        $requeteDetailFilm->execute(["id" => $id]);
 
+        // Afficher le Casting
+        $pdo = Connect::seConnecter();
+        $requeteDetailCasting = $pdo->prepare("
+        SELECT 
+            CONCAT(p.prenom_personne,' ',p.nom_personne) as qui, 
+            r.nom_role
+        from casting c
+            INNER JOIN acteur a ON c.id_acteur = a.id_acteur
+            INNER JOIN personne p ON a.id_personne = p.id_personne
+            INNER JOIN role r ON c.id_role = r.id_role
+        WHERE c.id_film = :id
+        ORDER BY qui");
+        $requeteDetailCasting->execute(["id" => $id]);
+
+        // Afficher tous les genres
+        $pdo = Connect::seConnecter();
+        $requeteDetailGenre = $pdo->prepare("
+        SELECT
+            gf.id_film,
+            gf.id_genre,
+            g.libelle_genre
+        FROM 
+            genre_film gf
+            INNER JOIN genre g ON gf.id_genre = g.id_genre
+        WHERE gf.id_film = :id
+        ");
+        
+        $requeteDetailGenre->execute(["id" => $id]);
           
         require "view/detailFilm.php";
     }
