@@ -22,6 +22,8 @@ ob_start();//démarre session et créé tempon, capsule qui enregistre tout ce q
                 //boucle sur chaque films
             
                 foreach ($requeteListFilms->fetchAll() as $film){
+
+                    //afficher les informations
                     echo '<tr>
                                    <td><a href="#">'.$film['titre_film'].'</a></td>
                                    <td>'.$film['annee_sortie_film'].'</td>

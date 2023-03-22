@@ -7,6 +7,13 @@ namespace Controller;
 use Model\Connect;
 
 //Mon controlleur (c'est une classe dont on crée des instances)
+
+/** 
+ Error: Call to a member function query() on string 
+ * Le message signifie que tu appelles la fonction query sur une chaîne de caractères.
+* Comme tu l'appelles par $bdd->query($query), cela signifie (si l'erreur est bien à cette ligne) que $bdd est une chaîne, et non pas une connexion à mysql.
+* Montrer le code où est définie la variable $bdd ?
+*/
 class CinemaController
 {
     //lister les films
@@ -29,8 +36,22 @@ class CinemaController
     ');
 
         //Lister les reals pour le formulaire
+        $pdo = Connect::seConnecter();
+        $requeteFormListReal = $pdo->query("
+        SELECT 
+             CONCAT(p.prenom_personne,' ',p.nom_personne) as identite, 
+             r.id_realisateur
+         FROM realisateur r
+            INNER JOIN personne p ON r.id_personne = p.id_personne;
+            ");
         
-        //Lister les genres pour le formulaire
+        //Libelle genre
+        $pdo = Connect::seConnecter();
+        $requeteFormListGenre = $pdo->query("
+        SELECT libelle_genre, 
+            id_genre
+        FROM genre;
+            ");
 
         //Envoyer les informations à la vue
         require "view/listFilms.php";
@@ -65,34 +86,42 @@ class CinemaController
         require "view/detailFilm.php";
     }
 
-        public function addFilm() {
-            if (isset($_POST['submit'])) {
-                //Fitrage des données
-                $pdo = Connect::seConnecter();
+// //Formulaire d'ajout des films
+//         public function addFilm() {
+//             if (isset($_POST['submit'])) {
+//                 //Fitrage des données
+//                 $pdo = Connect::seConnecter();
 
-                //Les filtre pour eviter les failles XSS (sans image)
-                $titreFilm = filter_input(INPUT_POST, "titreFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                $synopsisFilm = filter_input(INPUT_POST, "synopsisFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                $anneeSortieFilm = filter_input(INPUT_POST, "anneeSortieFilm", FILTER_VALIDATE_INT);
-                $dureeFilm = filter_input(INPUT_POST, "dureeFilm", FILTER_VALIDATE_INT);
-                $noteFilm = filter_input(INPUT_POST, "noteFilm", FILTER_VALIDATE_INT);
-                $realisateurFilm =  filter_input(INPUT_POST, "id_realisateurFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                $genreFilm = filter_input(INPUT_POST, "genreFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                //il manque les images
+//                 //Les filtre pour eviter les failles XSS
+//                 $titreFilm = filter_input(INPUT_POST, "titreFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+//                 $anneeSortieFilm = filter_input(INPUT_POST, "anneeSortieFilm", FILTER_VALIDATE_INT);
+//                 $dureeFilm = filter_input(INPUT_POST, "dureeFilm", FILTER_VALIDATE_INT);
+//                 $noteFilm = filter_input(INPUT_POST, "noteFilm", FILTER_VALIDATE_INT);
+//                 //$realisateurFilm =  filter_input(INPUT_POST, "id_realisateurFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+//                 //$genreFilm = filter_input(INPUT_POST, "genreFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+//                 $afficheFilm = filter_input(INPUT_POST, "afficheFilm", FILTER_VALIDATE_URL);
+//                 $synopsisFilm = filter_input(INPUT_POST, "synopsisFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-                //ici prépare les films (il manque les images)
-                $requeteAddfilm = $pdo->prepare("
-                        INSERT INTO film (titre_film, synopsis_film, annee_sortie_film, duree_film,  note_film, id_realisateur, genre_film) 
-                        VALUES (:titreFilm, :synopsisFilm, :anneeSortieFilm,  :dureeFilm,  :notefilm, :idRealisateur, :genreFilm)
-                        ");
+//                 //ici prépare les films
+//                 $requeteAddFilm = $pdo->prepare("
+//                         INSERT INTO film (titre_film, annee_sortie_film, duree_film,  note_film, id_realisateur, genre_film, affiche_film, affiche_film, synopsis_film,) 
+//                         VALUES (:titreFilm, :anneeSortieFilm,  :dureeFilm,  :notefilm, :idRealisateur, :genreFilm, :afficheFilm, :synopsisFilm, )
+//                         ");
+                
+//                 //Après avoir filtrer les champs, il sont vérifiés en vrai ou false
+                
 
-                //On récupère le dernier ID rentré dans la BDD
-                $idFilm = $pdo -> lastInsertId();
+//                 //On récupère le dernier ID rentré dans la BDD
+//                 $idFilm = $pdo -> lastInsertId();
 
-                $requeteGenreFilm = $pdo->prepare("
-                        ");
-                $requeteGenreFilm->execute(["id" => $idFilm, "genre" => $genreFilm]);
-            }
-        header("Location: index.php?action=listFilms");
+//                 $requeteGenreFilm = $pdo->prepare("
+//                         INSERT INTO appartenir (id_film, id_genre)
+//                         VALUES (:id, :genre)
+//                         ");
+//                 $requeteGenreFilm->execute(["id" => $idFilm, "genre" => $genreFilm]);
+//             }
+//         header("Location: index.php?action=listFilms");
     }
+
+
 }//fin controller

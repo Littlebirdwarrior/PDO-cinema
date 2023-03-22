@@ -5,9 +5,8 @@ use Controller\CinemaController;
 use Controller\ActeurController;
 
 //chargement automatique de toutes les classes .php
-spl_autoload_register(function ($classname){
-
-    include $classname . '.php';
+spl_autoload_register(function ($_className){
+    require str_replace("\\","/", $_className). ".php";
 });
 
 //Récupération de l'id
@@ -26,8 +25,8 @@ if(isset($_GET["action"])){
             $ctrlCinema ->listFilms(); break;
         case "detailFilm" :
             $ctrlCinema ->detailFilm($id); break;
-        case "addFilm" :
-            $ctrlCinema ->addFilm(); break;
+        // case "addFilm" :
+        //     $ctrlCinema ->addFilm(); break;
             
         //Acteurs
         case "listActeurs":
@@ -42,11 +41,3 @@ if(isset($_GET["action"])){
         //Genres
     }
 }
-
-
-// public function getActeur($id){
-//     $pdo = Connect::seConnecter();
-//     $requete = $pdo -> prepare("SELECT * FROM acteur WHERE id_acteur = :id");
-//     $requete -> execute(["id" => $id]);
-//     require "view/acteur/detailActeur.php";
-// }
