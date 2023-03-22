@@ -121,7 +121,7 @@ class CinemaController
 //                 $requeteGenreFilm->execute(["id" => $idFilm, "genre" => $genreFilm]);
 //             }
 //         header("Location: index.php?action=listFilms");
-    }
+//    }
 
 
 }//fin controller
