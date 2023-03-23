@@ -2,11 +2,46 @@
 ob_start();
 ?>
 
+
+
 <section>
+    
     <?php
-    echo 'test';
-    //boucle
-    foreach($requeteDetailFilm->fetchAll() as $film){
+    //Mes fetch, je recupère les données de la BDD
+    $fetchFilm = $requeteDetailFilm->fetchAll();
+    $fetchGenre = $requeteDetailGenre->fetchAll();
+    $fetchCasting = $requeteDetailCasting->fetchAll();
+
+    //Fonction d'affichage des notes
+    function getNote($fetchFilm){
+        //Récupère mon int du sql
+        $noteStars = '';
+
+        //boucle pour la notation
+        foreach($fetchFilm as $film){
+            $note = $film['note_film'];  
+        }
+        
+        //Boucle tant que i inf a note, + une * pleine
+        for ( $i=1; $i <= $note; $i++){
+        $noteStars .= '<span class="material-symbols-rounded fill"> star </span>';
+        }
+
+        //Boucle tant que i inf à 5 et à 0 , + une * vide
+        for ( $i= $note - 5; $i < 0; $i++){
+            $noteStars .= '<span class="material-symbols-rounded"> star</span>';
+
+        }  
+        return $noteStars;
+        
+
+    } 
+
+
+    //boucle affichage
+    foreach($fetchFilm as $film){
+        
+        //Affichage
         echo '
          <div>
             <div>
@@ -19,14 +54,15 @@ ob_start();
             <h2>'.$film['titre_film'].'</h2>
                 <!------>
                 <ul>
-                    <li>Note: '.$film['note_film'].'</li>
-                    <li>Durée: '.$film['duree_film'].'</li>
-                    <li>Année de sortie: '.$film['annee_sortie_film'].'</li>
+                    <li>'.$film['affiche_film'].'</li>
+                    <li>Note : '. getNote($fetchFilm).' </li>
+                    <li>Durée : '.$film['duree_film'].'</li>
+                    <li>Année de sortie : '.$film['annee_sortie_film'].'</li>
                     <li>Réaliser par : '.$film['prenom_personne'].' '.$film['nom_personne'].'</li>
                     <!------>
                     <li> Avec :';
                
-             foreach($requeteDetailCasting->fetchAll() as $casting){ 
+             foreach($fetchCasting as $casting){ 
                 echo '
                     <a>
                     '.$casting['qui'].'
@@ -39,7 +75,7 @@ ob_start();
                     <li> Genres: '; 
 
                     //Boucle pour afficher tous les genres du film -->
-                    foreach ($requeteDetailGenre->fetchAll() as $genre){
+                    foreach ($fetchGenre as $genre){
                         echo ' '.$genre["libelle_genre"];
                     } 
 
@@ -49,6 +85,8 @@ ob_start();
             echo '</div>';
                 
     } 
+
+    getNote($film);
 ?>
 
 </section>

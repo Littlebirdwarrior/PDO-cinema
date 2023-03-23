@@ -41,9 +41,6 @@
     ?>
 </section>
 
-
-
-
 <?php
 
 $titre = $acteur["qui"];
