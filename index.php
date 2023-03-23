@@ -10,11 +10,11 @@ spl_autoload_register(function ($_className){
 });
 
 //Récupération de l'id
-$id = (isset($_GET["id"])) ? $_GET["id"] : null;//ici, quelque chose ne marche pas
+$id = (isset($_GET["id"])) ? $_GET["id"] : null;
 
 //Définitions des instances
 $ctrlCinema = new CinemaController();
-$ctrlActeurs = new ActeurController();
+$ctrlActeur = new ActeurController();
 
 //Traitements des différents retours de l'action
 
@@ -30,7 +30,10 @@ if(isset($_GET["action"])){
             
         //Acteurs
         case "listActeurs":
-             $ctrlActeurs-> listActeurs(); break;
+             $ctrlActeur-> listActeurs(); break;
+        case "detailActeur" :
+            $ctrlActeur-> detailActeur($id); 
+        break;
 
         //Realisateurs
 
