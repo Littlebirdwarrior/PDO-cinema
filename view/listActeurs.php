@@ -22,12 +22,12 @@ ob_start();
             
                 foreach ($requeteListActeurs->fetchAll() as $acteur){
                     echo '<tr>
-                                   <td>'.$acteur['prenom_personne'].' '.$acteur['nom_personne'].'</td>
-                                   <td>'.$acteur['date_naissance_personne'].'</td>
-                                   <td>'.$acteur['sexe_personne'].'</td>
-                               </tr>
+                            <td>'.$acteur['prenom_personne'].' '.$acteur['nom_personne'].'</td>
+                            <td>'.$acteur['date_naissance_personne'].'</td>
+                            <td>'.$acteur['sexe_personne'].'</td>
+                        </tr>
                         ';
-                }
+                    }
                 ?>
                 </tbody>
             </table>

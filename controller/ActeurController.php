@@ -58,6 +58,7 @@ class ActeurController {
                 $requeteFilmographie->execute(["id" => $id]);
                 
                 require "view/detailActeur.php";
+
     }
 
 

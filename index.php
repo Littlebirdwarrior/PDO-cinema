@@ -15,6 +15,7 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : null;
 //Définitions des instances
 $ctrlCinema = new CinemaController();
 $ctrlActeur = new ActeurController();
+$ctrlRealisateur = new RealisateurController();
 
 //Traitements des différents retours de l'action
 
@@ -34,8 +35,13 @@ if(isset($_GET["action"])){
         case "detailActeur" :
             $ctrlActeur-> detailActeur($id); 
         break;
-
         //Realisateurs
+        case "listRealisateurs":
+            $ctrlRealisateur-> listRealisateurs(); break;
+       case "detailRealisateur":
+            $ctrlRealisateur-> detailRealisateur($id); 
+        break;
+        
 
         //Roles
 

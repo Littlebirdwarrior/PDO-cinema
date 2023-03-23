@@ -3,7 +3,6 @@
 //un seul fichier pour le moment également qui contiendra l'ensemble des requêtes dans les fonctions en relation avec les vues 
 
 namespace Controller;
-
 use Model\Connect;
 
 //Mon controlleur (c'est une classe dont on crée des instances)
