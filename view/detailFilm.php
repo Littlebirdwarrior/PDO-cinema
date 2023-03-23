@@ -33,7 +33,6 @@ ob_start();
        <h2><?=$fetchFilm['titre_film']?></h2>
            <!------>
            <ul>
-               <li><?=$fetchFilm['affiche_film']?></li>
                <li>Note : <?=getNote($fetchFilm)?></li>
                <li>Durée : <?=$fetchFilm['duree_film']?></li>
                <li>Année de sortie : <?=$fetchFilm['annee_sortie_film']?>'</li>
