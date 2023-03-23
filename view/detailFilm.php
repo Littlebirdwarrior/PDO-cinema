@@ -48,7 +48,7 @@ ob_start();
                         '.$casting['nomAct'].'
                         </a>
                         ('.$casting['nom_role'].
-                        '),';
+                        ') <span> | </span>'; //il faudra cacher le derniers span en css
                     }   
                     //boucle genre
                     echo'</li>
