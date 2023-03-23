@@ -33,14 +33,12 @@ if(isset($_GET["action"])){
         case "listActeurs":
              $ctrlActeur-> listActeurs(); break;
         case "detailActeur" :
-            $ctrlActeur-> detailActeur($id); 
-        break;
+            $ctrlActeur-> detailActeur($id); break;
         //Realisateurs
         case "listRealisateurs":
             $ctrlRealisateur-> listRealisateurs(); break;
-       case "detailRealisateur":
-            $ctrlRealisateur-> detailRealisateur($id); 
-        break;
+        // case "detailRealisateur":
+        //     $ctrlRealisateur-> detailRealisateur($id); break;
         
 
         //Roles
