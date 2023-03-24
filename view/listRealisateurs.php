@@ -8,12 +8,13 @@ ob_start();
 ?>
 
     <!---Compte des films-->
-    <!---<p>Il y a 
-    //$fetchReals-> rowCount()
-    <p>Réalisateurs</p>-->
+    <p>Il y a 
+    <?=$requeteListRealisateurs->rowCount()?>
+    Réalisateurs
+    </p>
 
     <section>
-        <h2>Mes Réalisateur</h2>
+        <h2>Mes Réalisateurs</h2>
         <div>
             <table>
                 <thead>
