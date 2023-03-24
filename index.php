@@ -38,8 +38,8 @@ if(isset($_GET["action"])){
         //Realisateurs
         case "listRealisateurs":
             $ctrlRealisateur-> listRealisateurs(); break;
-        // case "detailRealisateur":
-        //     $ctrlRealisateur-> detailRealisateur($id); break;
+        case "detailRealisateur":
+            $ctrlRealisateur-> detailRealisateur($id); break;
         
 
         //Roles
