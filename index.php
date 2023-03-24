@@ -3,6 +3,7 @@
 //Appel des controller
 use Controller\CinemaController;
 use Controller\ActeurController;
+use Controller\RealisateurController;
 
 //chargement automatique de toutes les classes .php
 spl_autoload_register(function ($_className){
@@ -32,8 +33,8 @@ if(isset($_GET["action"])){
         //Acteurs
         case "listActeurs":
              $ctrlActeur-> listActeurs(); break;
-        case "detailActeur" :
-            $ctrlActeur-> detailActeur($id); break;
+        // case "detailActeur" :
+        //     $ctrlActeur-> detailActeur($id); break;
         //Realisateurs
         case "listRealisateurs":
             $ctrlRealisateur-> listRealisateurs(); break;

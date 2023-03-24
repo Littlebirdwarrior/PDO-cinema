@@ -14,7 +14,7 @@ class ActeurController {
             p.prenom_personne,
             p.nom_personne,
             p.sexe_personne,
-            p.date_naissance_personne 
+            DATE_FORMAT(date_naissance_personne, "%d/%m/%Y") AS date_naissance
         FROM 
             acteur a
             INNER JOIN personne  p ON a.id_personne = p.id_personne

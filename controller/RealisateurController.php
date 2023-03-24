@@ -4,15 +4,17 @@ namespace Controller;
 use Model\Connect;
 
 
-class RealisteurController 
+class RealisateurController 
 {
 
      //Lister les Réalisateurs
      public function listRealisateurs(){
         $pdo = Connect::seConnecter();
-        $requeteListRealisateur = $pdo->query("
+        $requeteListRealisateurs = $pdo->query("
         SELECT
             CONCAT(personne.prenom_personne, ' ', personne.nom_personne) AS realisateurs,
+            personne.sexe_personne,
+            DATE_FORMAT(date_naissance_personne, '%d/%m/%Y') AS date_naissance,
             GROUP_CONCAT(CONCAT_WS('-', film.titre_film, film.annee_sortie_film) SEPARATOR ' | ') AS films
         FROM
             film

@@ -4,21 +4,19 @@ ob_start();
 
 <?php
     //Mes fetch, je recupère les données de la BDD
-    $fetchFilm = $requeteDetailFilm->fetch();
-    $fetchGenre = $requeteDetailGenre->fetchAll();
-    $fetchCasting = $requeteDetailCasting->fetchAll();
+    $fetchReals = $requeteListRealisateurs ->fetchAll();
 ?>
 
     <!---Compte des films-->
-    <p>Il y a <?=$requeteListActeurs-> rowCount()?> acteurs</p>
+    <p>Il y a <?=$fetchReals-> rowCount()?> Réalisateurs</p>
 
     <section>
-        <h2>Mes Acteurs</h2>
+        <h2>Mes Réalisateur</h2>
         <div>
             <table>
                 <thead>
                 <tr>
-                    <th>Acteur</th>
+                    <th>Réalisateurs</th>
                     <th>date de naissance</th>
                     <th>Sexe</th>
                 </tr>
@@ -27,11 +25,11 @@ ob_start();
                 <?php
                 //boucle sur chaque films
             
-                foreach ($requeteListActeurs->fetchAll() as $acteur){
+                foreach ($fetchReals as $real){
                     echo '<tr>
-                            <td>'.$acteur['prenom_personne'].' '.$acteur['nom_personne'].'</td>
-                            <td>'.$acteur['date_naissance_personne'].'</td>
-                            <td>'.$acteur['sexe_personne'].'</td>
+                            <td>'.$real['realisateurs'].'/td>
+                            <td>'.$real['date_naissance'].'</td>
+                            <td>'.$real['sexe_personne'].'</td>
                         </tr>
                         ';
                     }
