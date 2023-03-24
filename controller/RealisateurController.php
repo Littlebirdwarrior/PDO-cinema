@@ -15,7 +15,7 @@ class RealisateurController
             CONCAT(personne.prenom_personne, ' ', personne.nom_personne) AS realisateurs,
             personne.sexe_personne,
             DATE_FORMAT(date_naissance_personne, '%d/%m/%Y') AS date_naissance,
-            GROUP_CONCAT(CONCAT_WS('-', film.titre_film, film.annee_sortie_film) SEPARATOR ' | ') AS films
+            GROUP_CONCAT(CONCAT_WS('', film.titre_film, ' (', film.annee_sortie_film, ')') SEPARATOR ' | ') AS films
         FROM
             film
             INNER JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur

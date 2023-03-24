@@ -8,7 +8,9 @@ ob_start();
 ?>
 
     <!---Compte des films-->
-    <p>Il y a <?=$fetchReals-> rowCount()?> Réalisateurs</p>
+    <!---<p>Il y a 
+    //$fetchReals-> rowCount()
+    <p>Réalisateurs</p>-->
 
     <section>
         <h2>Mes Réalisateur</h2>
@@ -19,6 +21,7 @@ ob_start();
                     <th>Réalisateurs</th>
                     <th>date de naissance</th>
                     <th>Sexe</th>
+                    <th>Filmographie</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -27,9 +30,10 @@ ob_start();
             
                 foreach ($fetchReals as $real){
                     echo '<tr>
-                            <td>'.$real['realisateurs'].'/td>
+                            <td>'.$real['realisateurs'].'</td>
                             <td>'.$real['date_naissance'].'</td>
                             <td>'.$real['sexe_personne'].'</td>
+                            <td>'.$real['films'].'</td>
                         </tr>
                         ';
                     }
