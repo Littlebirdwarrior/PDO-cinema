@@ -31,10 +31,10 @@ ob_start();
             
                 foreach ($fetchReals as $real){
                     echo '<tr>
-                            <td>'.$real['realisateurs'].'</td>
+                            <td>'.$real['nomReal'].'</td>
                             <td>'.$real['date_naissance'].'</td>
                             <td>'.$real['sexe_personne'].'</td>
-                            <td>'.$real['films'].'</td>
+                            <td>'.$real['filmographie'].'</td>
                         </tr>
                         ';
                     }
