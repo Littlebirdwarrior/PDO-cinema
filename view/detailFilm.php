@@ -36,14 +36,17 @@ ob_start();
                <li>Note : <?=getNote($fetchFilm)?></li>
                <li>Durée : <?=$fetchFilm['duree_film']?></li>
                <li>Année de sortie : <?=$fetchFilm['annee_sortie_film']?>'</li>
-               <li>Réaliser par : <?=$fetchFilm['nomReal']?></li>
+               <li>Réaliser par : 
+                <a href="http://localhost:8888/index.php?action=detailRealisateur&id=<?=$fetchFilm['id_realisateur']?>">
+                    <?=$fetchFilm['nomReal']?></a>
+                </li>
                <!------>
                <li> Avec :
                     <?php
                     //boucle film
                     foreach($fetchCasting as $casting){ 
                     echo '
-                        <a>
+                        <a href="http://localhost:8888/index.php?action=detailActeur&id='.$casting['id_acteur'].'">
                         '.$casting['nomAct'].'
                         </a>
                         ('.$casting['nom_role'].
@@ -55,7 +58,7 @@ ob_start();
 
                         //Boucle pour afficher tous les genres du film -->
                         foreach ($fetchGenre as $genre){
-                            echo ' '.$genre["libelle_genre"];
+                            echo ' '.$genre["libelle_genre"] .'<span> | </span>';
                         }
                     ?>
        </li></ul>

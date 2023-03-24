@@ -71,6 +71,7 @@ class CinemaController
             film.annee_sortie_film,
             TIME_FORMAT(SEC_TO_TIME(film.duree_film * 60), "%H:%i") AS duree_film,
             film.synopsis_film,
+            film.id_realisateur,
             CONCAT(prenom_personne, " ", nom_personne) AS nomReal,
             film.affiche_film,
             film.note_film
@@ -88,7 +89,8 @@ class CinemaController
         // Afficher le Casting
         $pdo = Connect::seConnecter();
         $requeteDetailCasting = $pdo->prepare('
-        SELECT 
+        SELECT
+            c.id_acteur,
             CONCAT(p.prenom_personne," ",p.nom_personne) as nomAct, 
             r.nom_role
         from casting c
