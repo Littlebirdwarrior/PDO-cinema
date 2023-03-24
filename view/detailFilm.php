@@ -6,7 +6,7 @@ ob_start();
     
     <?php
     //Mes fetch, je recupère les données de la BDD
-    $fetchFilm = $requeteDetailFilm->fetch();
+    $fetchFilm = $requeteDetailFilm->fetch(); //fetch, car je ne récupère qu'un seul id
     $fetchGenre = $requeteDetailGenre->fetchAll();
     $fetchCasting = $requeteDetailCasting->fetchAll();
 

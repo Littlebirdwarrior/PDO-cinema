@@ -35,30 +35,35 @@ class ActeurController {
     //Identité et filmographie, 2 requetes différentes pour plus de clareté
         // Identité
         $pdo = Connect::seConnecter();
-        $requeteDetailActeur = $pdo->prepare('
+        $requeteDetailActeur = $pdo->prepare("
         SELECT
-            CONCAT(p.prenom_personne, " ", p.nom_personne) AS qui,
-            DATE_FORMAT(p.date_naissance_personne, "%d/%m/%Y") AS date_naissance,
+            CONCAT(p.prenom_personne, ' ', p.nom_personne) AS nomAct,
+            DATE_FORMAT(p.date_naissance_personne, '%d/%m/%Y') AS date_naissance,
             p.sexe_personne
         FROM
             personne p
             INNER JOIN acteur a ON p.id_personne = a.id_personne
         WHERE
         a.id_acteur = :id
-        ');
-        $requeteDetailActeur->execute(["id" => $id]);
+        ");
+        $requeteDetailActeur->execute(['id' => $id]);
 
-        // Filmographie
+        // Filmographie (le film et le role de l'acteur)
         $pdo = Connect::seConnecter();
         $requeteFilmographie = $pdo->prepare("
-        SELECT 
-            f.titre_film,  
-            f.id_film
-        from casting c 
-            INNER JOIN acteur a ON c.id_acteur = a.id_acteur
-            INNER JOIN personne p ON a.id_personne = p.id_personne 
-            INNER JOIN film f ON c.id_film = f.id_film
-        WHERE a.id_acteur = :id
+        SELECT
+            film.id_film,
+            film.titre_film,
+            role.nom_role,
+            film.annee_sortie_film
+        FROM
+            casting
+            INNER JOIN film ON casting.id_film = film.id_film
+            INNER JOIN ROLE ON casting.id_role = role.id_role
+        WHERE
+            casting.id_acteur = :id
+        ORDER BY
+            film.annee_sortie_film DESC
         ");
         $requeteFilmographie->execute(["id" => $id]);
         
