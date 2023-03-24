@@ -20,19 +20,21 @@ class CinemaController
     {
         //Lister les info de la table film
         $pdo = Connect::seConnecter();
-        $requeteListFilms = $pdo->query('
+        $requeteListFilms = $pdo->query("
         SELECT
-                film.titre_film,
-                film.annee_sortie_film,
-                TIME_FORMAT(SEC_TO_TIME(film.duree_film * 60), "%H:%i") AS duree_film,
-                personne.prenom_personne,
-                personne.nom_personne,
-                film.note_film
-            FROM
+            film.id_film,
+            film.titre_film,
+            film.annee_sortie_film,
+            TIME_FORMAT(SEC_TO_TIME(film.duree_film * 60), '%H:%i') AS duree_film,
+            CONCAT(personne.prenom_personne, ' ', personne.nom_personne) AS nomReal,
+            film.note_film
+        FROM
             film
-                INNER JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur
-                INNER JOIN personne ON realisateur.id_personne = personne.id_personne
-    ');
+            INNER JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur
+            INNER JOIN personne ON realisateur.id_personne = personne.id_personne
+        ORDER BY
+            annee_sortie_film DESC
+        ");
 
         //Lister les reals pour le formulaire
         $pdo = Connect::seConnecter();
@@ -84,16 +86,17 @@ class CinemaController
 
         // Afficher le Casting
         $pdo = Connect::seConnecter();
-        $requeteDetailCasting = $pdo->prepare("
+        $requeteDetailCasting = $pdo->prepare('
         SELECT 
-            CONCAT(p.prenom_personne,' ',p.nom_personne) as nomAct, 
+            CONCAT(p.prenom_personne," ",p.nom_personne) as nomAct, 
             r.nom_role
         from casting c
             INNER JOIN acteur a ON c.id_acteur = a.id_acteur
             INNER JOIN personne p ON a.id_personne = p.id_personne
             INNER JOIN role r ON c.id_role = r.id_role
         WHERE c.id_film = :id
-        ORDER BY nomAct");
+        ORDER BY nomAct
+        ');
         $requeteDetailCasting->execute(["id" => $id]);
 
         // Afficher tous les genres

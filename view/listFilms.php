@@ -25,10 +25,10 @@ ob_start();//démarre session et créé tempon, capsule qui enregistre tout ce q
 
                     //afficher les informations
                     echo '<tr>
-                                   <td><a href="#">'.$film['titre_film'].'</a></td>
+                                   <td><a href="http://localhost:8888/index.php?action=detailFilm&id='.$film["id_film"].'">'.$film['titre_film'].'</a></td>
                                    <td>'.$film['annee_sortie_film'].'</td>
                                    <td>'.$film['duree_film'].'</td>
-                                   <td>'.$film['prenom_personne'].' '.$film['nom_personne'].'</td>
+                                   <td>'.$film['nomReal'].'</td>
                                    <td>'.$film['note_film'].'</td>
                                </tr>
                         ';

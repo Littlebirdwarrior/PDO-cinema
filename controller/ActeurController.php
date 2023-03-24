@@ -11,9 +11,9 @@ class ActeurController {
 
         $requeteListActeurs = $pdo->query("
         SELECT
-        CONCAT(p.prenom_personne, ' ', p.nom_personne) AS nomAct,
-        p.sexe_personne,
-        DATE_FORMAT(date_naissance_personne, '%d/%m/%Y') AS date_naissance,
+            CONCAT(p.prenom_personne, ' ', p.nom_personne) AS nomAct,
+            p.sexe_personne,
+            DATE_FORMAT(date_naissance_personne, '%d/%m/%Y') AS date_naissance,
             GROUP_CONCAT(CONCAT(f.titre_film, ' (', f.annee_sortie_film, ')') SEPARATOR ', ') AS filmographie
         FROM
             acteur a
@@ -22,6 +22,9 @@ class ActeurController {
             INNER JOIN film f ON c.id_film = f.id_film
         GROUP BY
             a.id_acteur
+        ORDER BY
+            p.nom_personne,
+            date_naissance_personne
         ");
     
     require "view/listActeurs.php";
