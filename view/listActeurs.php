@@ -15,6 +15,7 @@ ob_start();
                     <th>Acteur</th>
                     <th>date de naissance</th>
                     <th>Sexe</th>
+                    <th>Filmographie</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -23,9 +24,10 @@ ob_start();
             
                 foreach ($requeteListActeurs->fetchAll() as $acteur){
                     echo '<tr>
-                            <td>'.$acteur['prenom_personne'].' '.$acteur['nom_personne'].'</td>
+                            <td>'.$acteur['nomAct'].'</td>
                             <td>'.$acteur['date_naissance'].'</td>
                             <td>'.$acteur['sexe_personne'].'</td>
+                            <td>'.$acteur['filmographie'].'</td>
                         </tr>
                         ';
                     }
