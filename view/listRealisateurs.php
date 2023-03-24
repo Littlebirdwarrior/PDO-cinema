@@ -2,6 +2,13 @@
 ob_start();
 ?>
 
+<?php
+    //Mes fetch, je recupère les données de la BDD
+    $fetchFilm = $requeteDetailFilm->fetch();
+    $fetchGenre = $requeteDetailGenre->fetchAll();
+    $fetchCasting = $requeteDetailCasting->fetchAll();
+?>
+
     <!---Compte des films-->
     <p>Il y a <?=$requeteListActeurs-> rowCount()?> acteurs</p>
 
@@ -35,7 +42,7 @@ ob_start();
     </section>
 
 <?php
-$titre = "Listes des acteurs";
-$titre_secondaire= "Listes des acteurs";
+$titre = "Listes des réalisateurs";
+$titre_secondaire= "Listes des réalisateurs";
 $contenu = ob_get_clean();//envois le tempons dans la session
 require "view/template.php";
