@@ -18,7 +18,7 @@ $ctrlCinema = new CinemaController();
 $ctrlActeur = new ActeurController();
 $ctrlRealisateur = new RealisateurController();
 
-//Traitements des différents retours de l'action
+//Traitements des différents retours de l'action (nb, chaque detail a besoin de l'id en param)
 
 if(isset($_GET["action"])){
     switch ($_GET["action"]){
@@ -33,8 +33,8 @@ if(isset($_GET["action"])){
         //Acteurs
         case "listActeurs":
              $ctrlActeur-> listActeurs(); break;
-        // case "detailActeur" :
-        //     $ctrlActeur-> detailActeur($id); break;
+        case "detailActeur" :
+            $ctrlActeur-> detailActeur($id); break;
         //Realisateurs
         case "listRealisateurs":
             $ctrlRealisateur-> listRealisateurs(); break;

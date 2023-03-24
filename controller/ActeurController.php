@@ -30,41 +30,41 @@ class ActeurController {
     require "view/listActeurs.php";
     }
 
-    // //Détail Acteurs
-    // public function detailActeur($id){
-    //     //Identité
-    //             // Identité
-    //             $pdo = Connect::seConnecter();
-    //             $requeteDetailActeur = $pdo->prepare('
-    //             SELECT
-    //                 CONCAT(prenom_personne, " ", nom_personne) AS qui,
-    //                 DATE_FORMAT(date_naissance_personne, "%d/%m/%Y") AS date_naissance,
-    //                 sexe_personne
-    //             FROM
-    //                 personne
-    //                 INNER JOIN acteur ON personne.id_personne = acteur.id_personne
-    //             WHERE
-    //                 acteur.id_acteur = :id
-    //             ');
-    //             $requeteDetailActeur->execute(["id" => $id]);
-        
-    //             // Filmographie
-    //             $pdo = Connect::seConnecter();
-    //             $requeteFilmographie = $pdo->prepare("
-    //             SELECT 
-    //                 f.titre_film,  
-    //                 f.id_film
-    //             from casting c 
-    //                 INNER JOIN acteur a ON c.id_acteur = a.id_acteur
-    //                 INNER JOIN personne p ON a.id_personne = p.id_personne 
-    //                 INNER JOIN film f ON c.id_film = f.id_film
-    //             WHERE a.id_acteur = :id
-    //             ");
-    //             $requeteFilmographie->execute(["id" => $id]);
-                
-    //             require "view/detailActeur.php";
+    //Détail Acteurs
+    public function detailActeur($id){
+    //Identité et filmographie, 2 requetes différentes pour plus de clareté
+        // Identité
+        $pdo = Connect::seConnecter();
+        $requeteDetailActeur = $pdo->prepare('
+        SELECT
+            CONCAT(p.prenom_personne, " ", p.nom_personne) AS qui,
+            DATE_FORMAT(p.date_naissance_personne, "%d/%m/%Y") AS date_naissance,
+            p.sexe_personne
+        FROM
+            personne p
+            INNER JOIN acteur a ON p.id_personne = a.id_personne
+        WHERE
+        a.id_acteur = :id
+        ');
+        $requeteDetailActeur->execute(["id" => $id]);
 
-    // }
+        // Filmographie
+        $pdo = Connect::seConnecter();
+        $requeteFilmographie = $pdo->prepare("
+        SELECT 
+            f.titre_film,  
+            f.id_film
+        from casting c 
+            INNER JOIN acteur a ON c.id_acteur = a.id_acteur
+            INNER JOIN personne p ON a.id_personne = p.id_personne 
+            INNER JOIN film f ON c.id_film = f.id_film
+        WHERE a.id_acteur = :id
+        ");
+        $requeteFilmographie->execute(["id" => $id]);
+        
+        require "view/detailActeur.php";
+
+    }
 
 
 }
