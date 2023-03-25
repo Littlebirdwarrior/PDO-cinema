@@ -35,7 +35,7 @@ ob_start();
            <ul>
                <li>Note : <?=getNote($fetchFilm)?></li>
                <li>Durée : <?=$fetchFilm['duree_film']?></li>
-               <li>Année de sortie : <?=$fetchFilm['annee_sortie_film']?>'</li>
+               <li>Année de sortie : <?=$fetchFilm['annee_sortie_film']?></li>
                <li>Réaliser par : 
                 <a href="http://localhost:8888/index.php?action=detailRealisateur&id=<?=$fetchFilm['id_realisateur']?>">
                     <?=$fetchFilm['nomReal']?></a>

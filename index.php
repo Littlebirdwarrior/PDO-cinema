@@ -4,6 +4,7 @@
 use Controller\CinemaController;
 use Controller\ActeurController;
 use Controller\RealisateurController;
+use Controller\RoleController;
 
 //chargement automatique de toutes les classes .php
 spl_autoload_register(function ($_className){
@@ -17,6 +18,7 @@ $id = (isset($_GET["id"])) ? $_GET["id"] : null;
 $ctrlCinema = new CinemaController();
 $ctrlActeur = new ActeurController();
 $ctrlRealisateur = new RealisateurController();
+$ctrlRole = new RoleController();
 
 //Traitements des différents retours de l'action (nb, chaque detail a besoin de l'id en param)
 
@@ -41,11 +43,11 @@ if(isset($_GET["action"])){
         case "detailRealisateur":
             $ctrlRealisateur-> detailRealisateur($id); break;
         
-
         //Roles
+        // case "listRoles":
+        //     $ctrlRole ->listRoles(); break;
+        //Casting ?
 
-        //Casting
-
-        //Genres
+        //Genres ?
     }
 }
