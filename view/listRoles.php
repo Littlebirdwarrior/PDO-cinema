@@ -2,7 +2,6 @@
 ob_start();//démarre session et créé tempon, capsule qui enregistre tout ce qui suit en string
 ?> 
     <!--Compte des film-->
-    <p>Il y a <?=$requeteListRoles>rowCount()?> Role</p>
 
     <section>
         <h2>Mes films</h2>
@@ -14,7 +13,6 @@ ob_start();//démarre session et créé tempon, capsule qui enregistre tout ce q
                     <th>Acteur</th>
                     <th>Film</th>
                     <th>Année</th>
-                    <th>Notes</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -26,6 +24,12 @@ ob_start();//démarre session et créé tempon, capsule qui enregistre tout ce q
                     //afficher les informations
                     echo '<tr>
                             <td>'. $role['nom_role']. 
+                            '</td>
+                            <td>'. $role['nomAct']. 
+                            '</td>
+                            <td>'. $role['titre_film']. 
+                            '</td>
+                            <td>'. $role['annee_sortie_film']. 
                             '</td>
                         </tr>
                         ';
