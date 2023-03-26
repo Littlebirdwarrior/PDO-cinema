@@ -3,7 +3,7 @@
  ob_start();
 ?>
 
-<section></section>
+<section>
     <?php
     //définition de mes variables fetch
 
