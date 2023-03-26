@@ -46,8 +46,9 @@ if(isset($_GET["action"])){
         //Roles
         case "listRoles":
             $ctrlRole ->listRoles(); break;
+        case "detailRole":
+            $ctrlRole-> detailRole($id); break;
         //Casting ?
-
         //Genres ?
     }
 }

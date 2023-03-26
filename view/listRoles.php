@@ -23,7 +23,7 @@ ob_start();//démarre session et créé tempon, capsule qui enregistre tout ce q
 
                     //afficher les informations
                     echo '<tr>
-                            <td>'. $role['nom_role']. 
+                            <td>'. '<a href="index.php?action=detailRole&id='.$role['id_role'].'" >'.$role['nom_role']. '</a>'.
                             '</td>
                             <td><a href="http://localhost:8888/index.php?action=detailActeur&id='.$role["id_acteur"].'">'
                             .$role['nomAct'].'</a>
