@@ -25,9 +25,11 @@ ob_start();//démarre session et créé tempon, capsule qui enregistre tout ce q
                     echo '<tr>
                             <td>'. $role['nom_role']. 
                             '</td>
-                            <td>'. $role['nomAct']. 
-                            '</td>
-                            <td>'. $role['titre_film']. 
+                            <td><a href="http://localhost:8888/index.php?action=detailActeur&id='.$role["id_acteur"].'">'
+                            .$role['nomAct'].'</a>
+                            <td>
+                            <a href="http://localhost:8888/index.php?action=detailFilm&id='.$role["id_film"].'">'
+                            .$role['titre_film'].'</a>'.
                             '</td>
                             <td>'. $role['annee_sortie_film']. 
                             '</td>
