@@ -29,6 +29,7 @@ ob_start();//démarre session et créé tempon, capsule qui enregistre tout ce q
                             '</td>
                             <td><a href="http://localhost:8888/index.php?action=detailActeur&id='.$role["id_acteur"].'">'
                             .$role['nomAct'].'</a>
+                            </td>
                             <td>
                             <a href="http://localhost:8888/index.php?action=detailFilm&id='.$role["id_film"].'">'
                             .$role['titre_film'].'</a>'.
