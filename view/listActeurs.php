@@ -21,7 +21,6 @@ $fetchActeurs = $requeteListActeurs->fetchAll();
                     <th>Acteur</th>
                     <th>date de naissance</th>
                     <th>Sexe</th>
-                    <th>Filmographie</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -36,7 +35,6 @@ $fetchActeurs = $requeteListActeurs->fetchAll();
                             '</td>
                             <td>'.$acteur['date_naissance'].'</td>
                             <td>'.$acteur['sexe_personne'].'</td>
-                            <td>'.$acteur['filmographie'].'</td>
                             </tr>
                         ';
                     }

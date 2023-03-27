@@ -13,13 +13,10 @@ class ActeurController {
         a.id_acteur,
         CONCAT(p.prenom_personne, ' ', p.nom_personne) AS nomAct,
         p.sexe_personne,
-        DATE_FORMAT(date_naissance_personne, '%d/%m/%Y') AS date_naissance,
-        GROUP_CONCAT(CONCAT_WS('', f.titre_film, ' (', f.annee_sortie_film, ')') SEPARATOR ' | ') AS filmographie
+        DATE_FORMAT(date_naissance_personne, '%d/%m/%Y') AS date_naissance
     FROM
         acteur a
         INNER JOIN personne p ON p.id_personne = a.id_personne
-        INNER JOIN casting c ON a.id_acteur = c.id_acteur
-        INNER JOIN film f ON f.id_film = c.id_film
     GROUP BY
         a.id_acteur
     ORDER BY

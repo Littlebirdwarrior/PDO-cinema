@@ -11,16 +11,14 @@ class RealisateurController
         $pdo = Connect::seConnecter();
         $requeteListRealisateurs = $pdo->query("
         SELECT
-            f.id_realisateur,
+            r.id_realisateur,
             CONCAT(p.prenom_personne, ' ', p.nom_personne) AS nomReal,
             p.sexe_personne,
-            DATE_FORMAT(p.date_naissance_personne, '%d/%m/%Y') AS date_naissance,
-            GROUP_CONCAT(CONCAT_WS('', f.titre_film, ' (', f.annee_sortie_film, ')') SEPARATOR ' | ') AS filmographie
+            DATE_FORMAT(p.date_naissance_personne, '%d/%m/%Y') AS date_naissance
         FROM
-            film f
-            INNER JOIN realisateur r ON f.id_realisateur = r.id_realisateur
+            realisateur r
             INNER JOIN personne p ON r.id_personne = p.id_personne
-            GROUP BY
+        GROUP BY
             r.id_realisateur
         ");
 

@@ -3,7 +3,7 @@ ob_start();
 ?>
 
 <section>
-<form action="traitement.php?action=addRealisateur" method="post" enctype="multipart/form-data"> <!---ici, php, action : cible du form en php, fichier a atteindre lors du post http (method), envois variable ds autre page, ici, T.A--->
+<form action="index.php?action=addRealisateur" method="post" enctype="multipart/form-data"> <!---ici, php, action : cible du form en php, fichier a atteindre lors du post http (method), envois variable ds autre page, ici, T.A--->
         <h2>Ajouter un produit</h2>
         <p>
             <!---attribut "name", ce qui va permettre à la requête de classer le contenu de la saisie dans des clés portant le nom choisi.---->

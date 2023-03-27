@@ -22,7 +22,6 @@ ob_start();
                     <th>Réalisateurs</th>
                     <th>date de naissance</th>
                     <th>Sexe</th>
-                    <th>Filmographie</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -34,7 +33,6 @@ ob_start();
                             <td>'.$real['nomReal'].'</td>
                             <td>'.$real['date_naissance'].'</td>
                             <td>'.$real['sexe_personne'].'</td>
-                            <td>'.$real['filmographie'].'</td>
                         </tr>
                         ';
                     }
