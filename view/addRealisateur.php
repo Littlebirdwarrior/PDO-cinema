@@ -3,7 +3,7 @@ ob_start();
 ?>
 
 <section>
-<form action="traitement.php?action=addActeur" method="post" enctype="multipart/form-data"> <!---ici, php, action : cible du form en php, fichier a atteindre lors du post http (method), envois variable ds autre page, ici, T.A--->
+<form action="traitement.php?action=addRealisateur" method="post" enctype="multipart/form-data"> <!---ici, php, action : cible du form en php, fichier a atteindre lors du post http (method), envois variable ds autre page, ici, T.A--->
         <h2>Ajouter un produit</h2>
         <p>
             <!---attribut "name", ce qui va permettre à la requête de classer le contenu de la saisie dans des clés portant le nom choisi.---->
@@ -41,15 +41,16 @@ ob_start();
         </p> --->
         <p>
             <!----attribut "name" qui permettra de vérifier côté serveur que le formulaire a bien été validé par l'utilisateur.------>
-            <input class="button light" type="submit" name="submit" value="Ajouter l'acteur">
+            <input class="button light" type="submit" name="submit" value="Ajouter le réalisateur">
         </p>
 
 
 </section>
 
 <?php
-$titre = 'Ajouter un acteur';
-$titre_secondaire = "Ajouter un acteur";
+$titre = 'Ajouter un réalisateur';
+$titre_secondaire = "Ajouter un réalisateur";
 $contenu = ob_get_clean();
 require "view/template.php";
+
 
