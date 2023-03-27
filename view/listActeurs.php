@@ -1,7 +1,13 @@
 <?php
 ob_start();
 
+//Requete
+
+$fetchActeurs = $requeteListActeurs->fetchAll();
+
 ?>
+
+
 
     <!---Compte des films-->
     <p>Il y a <?=$requeteListActeurs-> rowCount()?> acteurs</p>
@@ -20,15 +26,18 @@ ob_start();
                 </thead>
                 <tbody>
                 <?php
-                //boucle sur chaque films
-            
-                foreach ($requeteListActeurs->fetchAll() as $acteur){
+
+
+                //affichage acteurs : boucle
+                foreach ($fetchActeurs as $acteur){
                     echo '<tr>
-                            <td>'.$acteur['nomAct'].'</td>
+                            <td>'
+                            .'<a href="index.php?action=detailActeur&id='.$acteur['id_acteur'].'" >'.$acteur['nomAct']. '</a>'.
+                            '</td>
                             <td>'.$acteur['date_naissance'].'</td>
                             <td>'.$acteur['sexe_personne'].'</td>
                             <td>'.$acteur['filmographie'].'</td>
-                        </tr>
+                            </tr>
                         ';
                     }
                 ?>
