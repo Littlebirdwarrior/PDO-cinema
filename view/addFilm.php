@@ -38,8 +38,9 @@ ob_start();
             <input class="" type="submit" name="submit" value="Ajouter le film">
 
     </form>
+    
     <div class="control">
-    <a class="button" href="recap.php">Voir le panier</a>
+    <a href="index.php?action=listFilms">Retour à la liste des films</a>
     </div>
 
 

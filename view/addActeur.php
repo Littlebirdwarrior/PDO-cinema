@@ -39,6 +39,9 @@ ob_start();
         </p>
 
 </form>
+<div class="control">
+    <a href="index.php?action=listActeurs">Retour à la liste des acteurs</a>
+    </div>
 
 </section>
 

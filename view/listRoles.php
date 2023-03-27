@@ -1,7 +1,9 @@
 <?php
 ob_start();//démarre session et créé tempon, capsule qui enregistre tout ce qui suit en string
 ?> 
-    <!--Compte des film-->
+    <!--Compte des role-->
+    <p>Il y a <?=$requeteListRoles->rowCount()?> roles</p>
+    <a href="index.php?action=addRole">Ajouter un role</a>
 
     <section>
         <h2>Mes films</h2>

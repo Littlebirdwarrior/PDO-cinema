@@ -41,8 +41,8 @@
         </div>
     </div>
     ';
-
     ?>
+    <a href="index.php?action=listActeurs"></a>
 </section>
 
 <?php

@@ -5,13 +5,12 @@ ob_start();
 <?php
     //Mes fetch, je recupère les données de la BDD
     $fetchReals = $requeteListRealisateurs ->fetchAll();
+    
 ?>
 
     <!---Compte des films-->
-    <p>Il y a 
-    <?=$requeteListRealisateurs->rowCount()?>
-    Réalisateurs
-    </p>
+    <p>Il y a <?=$requeteListRealisateurs->rowCount()?>réalisateurs</p>
+    <a href="index.php?action=addFilm">Ajouter un réalisateur</a>
 
     <section>
         <h2>Mes Réalisateurs</h2>

@@ -64,6 +64,7 @@ ob_start();
        </li></ul>
 
        <p> <span>Synopsis :</span><br><?=$fetchFilm['synopsis_film']?></p>
+       <a href="index.php?action=listFilms"></a>
        </div>
 
 

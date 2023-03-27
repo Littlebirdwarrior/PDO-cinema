@@ -29,6 +29,7 @@
     ';
 
     ?>
+    <a href="index.php?action=listRoles"></a>
 </section>
 
 <?php

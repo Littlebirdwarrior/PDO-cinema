@@ -37,8 +37,12 @@ ob_start();
             <!----attribut "name" qui permettra de vérifier côté serveur que le formulaire a bien été validé par l'utilisateur.------>
             <input type="submit" name="submitReal">
         </p>
+    </form>
 
-
+    <div class="control">
+    <a href="index.php?action=detailRealisateur">Retour à la liste des acteurs</a>
+    </div>
+    
 </section>
 
 <?php

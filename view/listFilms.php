@@ -3,6 +3,7 @@ ob_start();//démarre session et créé tempon, capsule qui enregistre tout ce q
 ?> 
     <!--Compte des film-->
     <p>Il y a <?=$requeteListFilms->rowCount()?> films</p>
+    <a href="index.php?action=addFilm">Ajouter un film</a>
 
     <section>
         <h2>Mes films</h2>

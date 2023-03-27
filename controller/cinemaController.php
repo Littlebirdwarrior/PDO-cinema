@@ -102,6 +102,10 @@ class CinemaController
         ');
         $requeteDetailCasting->execute(["id" => $id]);
 
+        /**Prépare une requête SQL à être exécutée par la méthode PDOStatement::execute(). 
+         * Le modèle de déclaration peut contenir zéro ou plusieurs paramètres nommés (:nom) ou marqueurs (?). 
+         * Ces paramètres sont utiliser pour pour lier les entrées utilisateurs. */
+
         // Afficher tous les genres
         $pdo = Connect::seConnecter();
         $requeteDetailGenre = $pdo->prepare("

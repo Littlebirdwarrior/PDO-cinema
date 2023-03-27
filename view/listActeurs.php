@@ -9,9 +9,9 @@ $fetchActeurs = $requeteListActeurs->fetchAll();
 
 
 
-    <!---Compte des films-->
+    <!---Compte les acteurs-->
     <p>Il y a <?=$requeteListActeurs-> rowCount()?> acteurs</p>
-
+    <a href="index.php?action=addActeur">Ajouter un acteur</a>
     <section>
         <h2>Mes Acteurs</h2>
         <div>
