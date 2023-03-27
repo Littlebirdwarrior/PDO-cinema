@@ -21,8 +21,8 @@ $ctrlCinema = new CinemaController();
 $ctrlActeur = new ActeurController();
 $ctrlRealisateur = new RealisateurController();
 $ctrlRole = new RoleController();
-$ctrlGenre = new GenreController();
 $ctrlCasting = new CastingController();
+$ctrlGenre = new GenreController();
 
 
 //Traitements des différents retours de l'action (nb, chaque detail a besoin de l'id en param)

@@ -57,50 +57,29 @@ class RoleController
         require "view/detailRole.php";
     }
 
-    public function addCasting(){
+    public function addRole(){
 
-        if (isset($_POST['submitActeur'])){
+        if (isset($_POST['submitRole'])){
+             //Connexion BDD
+        $pdo = Connect::seConnecter();
 
-            //Connexion BDD
-            $pdo = Connect::seConnecter();
+        //filtre
+        $nomRole = filter_input(INPUT_POST, "role", FILTER_SANITIZE_SPECIAL_CHARS);
 
-            //filtre
-            $nomRole = filter_input(INPUT_POST, "role", FILTER_SANITIZE_SPECIAL_CHARS);
-            $acteur = $_POST['acteur'];
-            $film = $_POST['film'];
+        //*Ajout Role (id généré automatiquement)
+        $addRoleRequest = $pdo->prepare("
+        INSERT INTO role (nom_role) 
+        VALUES (:nomRole)
+        ");
 
-            //*Ajout Role (id généré automatiquement)
-            $addRoleRequest = $pdo->prepare("
-            INSERT INTO role (nom_role) 
-            VALUES (:nomRole)
-            ");
+        $addRoleRequest->execute([
+            "nomRole" => $nomRole,
+        ]);
+        }
 
-            $addRoleRequest->execute([
-                "nomRole" => $nomRole,
-            ]);
-
-            //*Ajout casting
-
-            //je recupere l'id de role
-            $last_insert_id = $pdo->lastInsertId();
-
-            //Preparation requete en ciblant casting
-            $addCastingRequest = $pdo ->prepare("
-            INSERT INTO casting (id_film, id_role, id_acteur) 
-            VALUES(:filmId, :roleId, :acteurId)
-            ");
-
-            $addCastingRequest->execute([
-                "roleId" => $last_insert_id,
-                "acteurId" => $acteur,
-                "filmId" => $film,
-            ]);
-        }  
-
-        //j'affiche vers le bonne page
-        require 'view/addCasting.php';
-
+        require "view/addRole.php";
     }
+
 
 }
 
