@@ -30,7 +30,7 @@
         echo '
                 <li>
                 '. $film['nom_role'].' dans
-                <a href="index.php?action=detailFilm&id='.$film['id_film'].'" >'
+                    <a href="index.php?action=detailFilm&id='.$film['id_film'].'" >'
                     .$film['titre_film'].
                     '</a>
                 </li>

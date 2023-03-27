@@ -72,4 +72,70 @@ class ActeurController {
     }
 
 
+
+    public function addActeur(){
+        
+        if (isset($_POST['submitActeur'])){
+
+        // //test des données créées
+        // var_dump($_POST);
+        // die;
+
+        //se connecte à la base de données à l'aide d'un objet PDO.
+        $pdo = Connect::seConnecter();
+
+        //je filtre les données pour éviter les attaques par injection de code malveillant
+        $prenom = filter_input(INPUT_POST, "prenomAct", FILTER_SANITIZE_SPECIAL_CHARS);
+        $nom = filter_input(INPUT_POST, "nomAct", FILTER_SANITIZE_SPECIAL_CHARS);
+        $sexe = $_POST["sexeAct"];
+        $dateNaissance = $_POST["dateNaissanceAct"];
+
+        //récupérer l'identifiant auto-incrémenté généré pour la nouvelle ligne insérée dans la table personne
+        //nb (un acteur a 2 id, l'id_acteur et l'id_personne)
+        $last_insert_id = $pdo->lastInsertId();
+
+        //Je prépare la requete sql en ciblant la bonne table
+        /*la requête SQL est préparée pour insérer les données filtrées 
+        dans la table personne. La requête utilise les marqueurs de paramètres (:prenom, :nom, :sexe, :dateNaissance et :type) 
+        pour éviter les attaques par injection SQL. 
+        La valeur :type est toujours définie sur "acteur". Mais je l'enlève car cela ne marche pas* */
+        $addPersonneRequest = $pdo->prepare("
+            INSERT INTO personne (id_personne, prenom_personne, nom_personne, sexe_personne, date_naissance_personne )
+            VALUES (:personneID, :prenomAct, :nomAct, :sexeAct, :dateNaissanceAct)
+        ");
+
+        // var_dump($_POST); die;
+
+        //exécuter la requête préparée et insérer les données dans la table personne
+        $addPersonneRequest->execute([
+            "personneID" => $last_insert_id,
+            "prenomAct" => $prenom,
+            "nomAct" => $nom,
+            "sexeAct" => $sexe,
+            "dateNaissanceAct" => $dateNaissance,
+        ]);
+
+        //récupérer l'identifiant auto-incrémenté généré pour la nouvelle ligne insérée dans la table acteur
+        $last_insert_id = $pdo->lastInsertId();
+
+        /*une seconde requête SQL est préparée pour insérer l'identifiant de la nouvelle personne dans 
+        la table actor. Cette requête utilise un marqueur de paramètre (:acteurID) pour éviter les attaques par injection SQL.*/
+        $addActeurRequest = $pdo->prepare("
+            INSERT INTO acteur (id_acteur, id_personne) 
+            VALUES (:acteurID, :personneID)
+        ");
+        /**La méthode execute() est utilisée pour exécuter la requête préparée et insérer l'identifiant de la personne nouvellement créée dans la table actor. */
+        $addActeurRequest->execute([
+            "personneID" => $last_insert_id,
+            "acteurID" => $last_insert_id,
+        ]);
+
+        }
+
+        //je redirige vers le bonne page
+        require 'view/addActeur.php';
+        
+    }
+
+
 }
