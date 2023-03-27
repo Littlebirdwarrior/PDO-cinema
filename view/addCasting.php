@@ -42,7 +42,7 @@ ob_start();
 
 <div class="control">
 <!---retour à la page précédente-->
-<a href="<?php echo $_SERVER['HTTP_REFERER']; ?>">Retour</a>
+<a href= "http://localhost:8888/index.php?action=listFilms">Retour</a>
 </div>
 
 

@@ -1,9 +1,30 @@
 <?php
 ob_start();//démarre session et créé tempon, capsule qui enregistre tout ce qui suit en string
-?> 
+?>
+
     <!--Compte des film-->
     <p>Il y a <?=$requeteListFilms->rowCount()?> films</p>
     <a href="index.php?action=addFilm">Ajouter un film</a>
+
+    <?php
+
+        $fetchFilms = $requeteListFilms->fetchAll();
+        //Fonction d'affichage des notes
+        function getNote($fetchFilms){
+            foreach ( $fetchFilms as $film) {    
+                //Récupère mon int du sql
+                $note = $film['note_film']; //int 
+                if($note !== null){
+                    $starsFilled = str_repeat('<i class="fa-solid fa-star"></i>', $note);
+                    $starsEmpty = str_repeat('<i class="fa-regular fa-star"></i>', (5 - $note));
+                    $stars = $starsFilled .''. $starsEmpty .'***';
+                    echo $stars;
+                } else {
+                    echo 'pas de note disponible';
+                }    
+            } 
+        }
+    ?>
 
     <section>
         <h2>Mes films</h2>
@@ -22,7 +43,7 @@ ob_start();//démarre session et créé tempon, capsule qui enregistre tout ce q
                 <?php
                 //boucle sur chaque films
             
-                foreach ($requeteListFilms->fetchAll() as $film){
+                foreach ($fetchFilms as $film){
 
                     //afficher les informations
                     echo '<tr>
@@ -32,7 +53,7 @@ ob_start();//démarre session et créé tempon, capsule qui enregistre tout ce q
                                    <td><a href="http://localhost:8888/index.php?action=detailRealisateur&id="'.$film["id_realisateur"]. ' ">
                                         </a>'.$film['nomReal'].'</a>
                                     </td>
-                                   <td>'.$film['note_film'].'</td>
+                                   <td>'.getNote($fetchFilms).'</td>
                                </tr>
                         ';
                 }
