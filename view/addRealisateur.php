@@ -4,44 +4,38 @@ ob_start();
 
 <section>
 <form action="index.php?action=addRealisateur" method="post" enctype="multipart/form-data"> <!---ici, php, action : cible du form en php, fichier a atteindre lors du post http (method), envois variable ds autre page, ici, T.A--->
-        <h2>Ajouter un produit</h2>
         <p>
             <!---attribut "name", ce qui va permettre à la requête de classer le contenu de la saisie dans des clés portant le nom choisi.---->
             <label>
-                Nom de l'acteur :
-                <input type="text" name="">
+                Prénom du réalisateur :
+                <input type="text" name="prenomReal">
             </label>
         </p>
         <p>
             <label>
-                Prenom de l'acteur :
-                <input type="text" name="">
+                 Nom du réalisateur :
+                <input type="text" name="nomReal">
             </label>
         </p>
         <p>
-            <label>
+        <label>
                 Genre :
-                <input type="text" name="">
+                <select type="text" name="sexeReal" required>
+                    <option value="femme">Femme</option>
+                    <option value="homme">Homme</option>
+                    <option value="autre">Autre</option>
+                </select>
             </label>
         </p>
         <p>
             <label>
                 Date de naissance :
-                <input type="date" name="date_naissance">
+                <input type="date" name="dateNaissanceReal">
             </label>
         </p>
-        <!--- <p>
-            <label class="ajout-img">
-                Image du produit :
-                <span>
-                <input type="file" name="file">
-                
-                </span>
-            </label>
-        </p> --->
         <p>
             <!----attribut "name" qui permettra de vérifier côté serveur que le formulaire a bien été validé par l'utilisateur.------>
-            <input class="button light" type="submit" name="submit" value="Ajouter le réalisateur">
+            <input type="submit" name="submitReal">
         </p>
 
 

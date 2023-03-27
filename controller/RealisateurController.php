@@ -64,6 +64,56 @@ class RealisateurController
 
     }
 
+    public function addRealisateur(){
+        
+        if (isset($_POST['submitReal'])){
+
+        $pdo = Connect::seConnecter();
+
+        var_dump($_POST);
+
+        //je filtre les données pour éviter les attaques par injection de code malveillant
+        $prenom = filter_input(INPUT_POST, "prenomReal", FILTER_SANITIZE_SPECIAL_CHARS);
+        $nom = filter_input(INPUT_POST, "nomReal", FILTER_SANITIZE_SPECIAL_CHARS);
+        $sexe = $_POST["sexeReal"];
+        $dateNaissance = $_POST["dateNaissanceReal"];
+
+        //Je prépare la requete sql en ciblant la bonne table
+        $addPersonneRequest = $pdo->prepare("
+            INSERT INTO personne ( prenom_personne, nom_personne, sexe_personne, date_naissance_personne )
+            VALUES (:prenomReal, :nomReal, :sexeReal, :dateNaissanceReal)
+        ");
+
+        //exécuter la requête préparée et insérer les données dans la table personne
+        $addPersonneRequest->execute([
+            "prenomReal" => $prenom,
+            "nomReal" => $nom,
+            "sexeReal" => $sexe,
+            "dateNaissanceReal" => $dateNaissance,
+        ]);
+
+        //fonction pour récupérer le dernier l'identifiant dans personne par auto-incrementation
+        $last_insert_id = $pdo->lastInsertId();
+
+
+        /*une seconde requête SQL est préparée pour insérer l'identifiant de la nouvelle personne dans 
+        la table realisateur */
+        $addRealRequest = $pdo->prepare("
+            INSERT INTO acteur (id_personne) 
+            VALUES (:personneId)
+        ");
+        /** exécuter la requête préparée et insérer l'identifiant. */
+        $addRealRequest->execute([
+            "personneId" => $last_insert_id,
+        ]);
+
+        }
+
+        //je redirige vers le bonne page
+        require 'view/addRealisateur.php';
+        
+    }
+
 
 
 

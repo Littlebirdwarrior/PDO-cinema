@@ -46,6 +46,8 @@ if(isset($_GET["action"])){
             $ctrlRealisateur-> listRealisateurs(); break;
         case "detailRealisateur":
             $ctrlRealisateur-> detailRealisateur($id); break;
+        case "addRealisateur" :
+            $ctrlRealisateur->addRealisateur(); break;
         
         //Roles
         case "listRoles":
