@@ -13,7 +13,8 @@ class ActeurController {
         a.id_acteur,
         CONCAT(p.prenom_personne, ' ', p.nom_personne) AS nomAct,
         p.sexe_personne,
-        DATE_FORMAT(date_naissance_personne, '%d/%m/%Y') AS date_naissance
+        DATE_FORMAT(date_naissance_personne, '%d/%m/%Y') AS date_naissance,
+        DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), date_naissance_personne)), '%Y') + 0 AS age
     FROM
         acteur a
         INNER JOIN personne p ON p.id_personne = a.id_personne
@@ -37,6 +38,7 @@ class ActeurController {
             a.id_acteur,
             CONCAT(p.prenom_personne, ' ', p.nom_personne) AS nomAct,
             DATE_FORMAT(p.date_naissance_personne, '%d/%m/%Y') AS date_naissance,
+            DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), date_naissance_personne)), '%Y') + 0 AS age,
             p.sexe_personne
         FROM
             personne p

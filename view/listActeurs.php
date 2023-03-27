@@ -19,8 +19,9 @@ $fetchActeurs = $requeteListActeurs->fetchAll();
                 <thead>
                 <tr>
                     <th>Acteur</th>
-                    <th>date de naissance</th>
                     <th>Sexe</th>
+                    <th>Date de naissance</th>
+                    <th>Age</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -33,8 +34,9 @@ $fetchActeurs = $requeteListActeurs->fetchAll();
                             <td>'
                             .'<a href="index.php?action=detailActeur&id='.$acteur['id_acteur'].'" >'.$acteur['nomAct']. '</a>'.
                             '</td>
-                            <td>'.$acteur['date_naissance'].'</td>
                             <td>'.$acteur['sexe_personne'].'</td>
+                            <td>'.$acteur['date_naissance'].'</td>
+                            <td>'.$acteur['age'].' ans </td>
                             </tr>
                         ';
                     }

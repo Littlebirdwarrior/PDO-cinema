@@ -20,8 +20,9 @@ ob_start();
                 <thead>
                 <tr>
                     <th>Réalisateurs</th>
-                    <th>date de naissance</th>
                     <th>Sexe</th>
+                    <th>date de naissance</th>
+                    <th>Age</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -31,8 +32,9 @@ ob_start();
                 foreach ($fetchReals as $real){
                     echo '<tr>
                             <td>'.$real['nomReal'].'</td>
-                            <td>'.$real['date_naissance'].'</td>
                             <td>'.$real['sexe_personne'].'</td>
+                            <td>'.$real['date_naissance'].'</td>
+                            <td>'.$real['age'].' ans </td>
                         </tr>
                         ';
                     }

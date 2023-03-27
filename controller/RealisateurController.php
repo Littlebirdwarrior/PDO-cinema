@@ -14,7 +14,8 @@ class RealisateurController
             r.id_realisateur,
             CONCAT(p.prenom_personne, ' ', p.nom_personne) AS nomReal,
             p.sexe_personne,
-            DATE_FORMAT(p.date_naissance_personne, '%d/%m/%Y') AS date_naissance
+            DATE_FORMAT(date_naissance_personne, '%d/%m/%Y') AS date_naissance,
+            DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), date_naissance_personne)), '%Y') + 0 AS age
         FROM
             realisateur r
             INNER JOIN personne p ON r.id_personne = p.id_personne
@@ -32,7 +33,8 @@ class RealisateurController
         $requeteDetailReal = $pdo->prepare("
         SELECT
             CONCAT(p.prenom_personne, ' ', p.nom_personne) AS nomReal,
-            DATE_FORMAT(p.date_naissance_personne, '%d/%m/%Y') AS date_naissance,
+            DATE_FORMAT(date_naissance_personne, '%d/%m/%Y') AS date_naissance,
+            DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), date_naissance_personne)), '%Y') + 0 AS age
             p.sexe_personne
         FROM
             realisateur r
