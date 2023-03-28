@@ -124,42 +124,42 @@ class CinemaController
         require "view/detailFilm.php";
     }
 
-// //Formulaire d'ajout des films
-//         public function addFilm() {
-//             if (isset($_POST['submit'])) {
-//                 //Fitrage des données
-//                 $pdo = Connect::seConnecter();
+//Formulaire d'ajout des films
+        public function addFilm() {
+            if (isset($_POST['submit'])) {
+                //Fitrage des données
+                $pdo = Connect::seConnecter();
 
-//                 //Les filtre pour eviter les failles XSS
-//                 $titreFilm = filter_input(INPUT_POST, "titreFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-//                 $anneeSortieFilm = filter_input(INPUT_POST, "anneeSortieFilm", FILTER_VALIDATE_INT);
-//                 $dureeFilm = filter_input(INPUT_POST, "dureeFilm", FILTER_VALIDATE_INT);
-//                 $noteFilm = filter_input(INPUT_POST, "noteFilm", FILTER_VALIDATE_INT);
-//                 //$realisateurFilm =  filter_input(INPUT_POST, "id_realisateurFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-//                 //$genreFilm = filter_input(INPUT_POST, "genreFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-//                 $afficheFilm = filter_input(INPUT_POST, "afficheFilm", FILTER_VALIDATE_URL);
-//                 $synopsisFilm = filter_input(INPUT_POST, "synopsisFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                //Les filtre pour eviter les failles XSS
+                $titreFilm = filter_input(INPUT_POST, "titreFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $anneeSortieFilm = filter_input(INPUT_POST, "anneeSortieFilm", FILTER_VALIDATE_INT);
+                $dureeFilm = filter_input(INPUT_POST, "dureeFilm", FILTER_VALIDATE_INT);
+                $noteFilm = filter_input(INPUT_POST, "noteFilm", FILTER_VALIDATE_INT);
+                $afficheFilm = filter_input(INPUT_POST, "afficheFilm", FILTER_VALIDATE_URL);
+                $synopsisFilm = filter_input(INPUT_POST, "synopsisFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-//                 //ici prépare les films
-//                 $requeteAddFilm = $pdo->prepare("
-//                         INSERT INTO film (titre_film, annee_sortie_film, duree_film,  note_film, id_realisateur, genre_film, affiche_film, affiche_film, synopsis_film,) 
-//                         VALUES (:titreFilm, :anneeSortieFilm,  :dureeFilm,  :notefilm, :idRealisateur, :genreFilm, :afficheFilm, :synopsisFilm, )
-//                         ");
+                //ici prépare les films
+                $requeteAddFilm = $pdo->prepare("
+                INSERT INTO film (titre_film, annee_sortie_film, duree_film,  note_film, id_realisateur, genre_film, affiche_film, synopsis_film,) 
+                VALUES (:titreFilm, :anneeSortieFilm,  :dureeFilm,  :notefilm, :idRealisateur, :genreFilm, :afficheFilm, :synopsisFilm, )
+                ");
                 
-//                 //Après avoir filtrer les champs, il sont vérifiés en vrai ou false
+                //Après avoir filtrer les champs, il sont vérifiés en vrai ou false
                 
 
-//                 //On récupère le dernier ID rentré dans la BDD
-//                 $idFilm = $pdo -> lastInsertId();
+                //On récupère le dernier ID rentré dans la BDD
+                $idFilm = $pdo -> lastInsertId();
 
-//                 $requeteGenreFilm = $pdo->prepare("
-//                         INSERT INTO appartenir (id_film, id_genre)
-//                         VALUES (:id, :genre)
-//                         ");
-//                 $requeteGenreFilm->execute(["id" => $idFilm, "genre" => $genreFilm]);
-//             }
-//         header("Location: index.php?action=listFilms");
-//    }
+                $requeteGenreFilm = $pdo->prepare("
+                INSERT INTO appartenir (id_film, id_genre)
+                VALUES (:id, :genre)
+                ");
+                $requeteGenreFilm->execute([
+                    "id" => $idFilm, 
+                    "genre" => $nomGenre]);
+            }
+        header("Location: index.php?action=listFilms");
+   }
 
 
 }//fin controller
