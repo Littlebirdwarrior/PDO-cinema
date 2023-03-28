@@ -29,7 +29,7 @@ class CastingController {
         SELECT
             a.id_acteur,
             p.prenom_personne,
-            p.nom_personne,
+            p.nom_personne
         FROM
             casting c
             INNER JOIN acteur a ON a.id_acteur = c.id_acteur
