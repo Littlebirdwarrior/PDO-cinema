@@ -203,22 +203,26 @@ class CinemaController
                 "idRealisateur" => $idRealisateur
             ]);
 
-            //*recupérer Genre
-            //Après avoir filtrer les champs genre, il sont vérifiés en vrai ou false
+            //*recupérer Genre (tableau checkbox)
+            //Soucre : https://apcpedagogie.com/recuperer-les-valeurs-des-checkbox-avec-php/
 
-            //Je filtre l'id
-            $idGenre = filter_input(INPUT_POST, "idGenre", FILTER_VALIDATE_INT);
+            //Après aver vérifié si les checkbox sont cochée : cf view addFilm
+            //Ce filtre convertis les string en int 
 
-            //On récupère le dernier ID rentré dans la BDD
+            //On récupère le dernier ID film rentré dans la BDD
             $idFilm = $pdo->lastInsertId();
 
-            // $requeteAddGenres = $pdo->prepare("
-            //     INSERT INTO genre_film (id_film, id_genre)
-            //     VALUES (:id, :genre)
-            //     ");
-            // $requeteAddGenres->execute([
-            //     "id" => $idFilm
-            // ]);
+            $requeteAddGenres = $pdo->prepare("
+                INSERT INTO genre_film (id_film, id_genre)
+                VALUES (:idFilm, :idGenre)
+                ");
+            
+            //var_dump($requeteAddGenres); die;
+
+            $requeteAddGenres->execute([
+                    "idFilm" => $idFilm,
+                    "idGenre" => $idGenre
+            ]);
         }
 
         require "view/addFilm.php";

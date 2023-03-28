@@ -12,37 +12,37 @@ $fetchReals = $requeteRealsFilm->fetchAll();
     <p>
         <label>
             Titre :
-            <input type="text"  set="any" name="titreFilm" placeholder="Titre du film"/>
+            <input type="text" set="any" name="titreFilm" placeholder="Titre du film" required/>
         </label>
     </p>
     <p>
         <label>
             Année de sortie :
-            <input type="number" set="any" name="anneeSortieFilm" min="1920" max="2030" placeholder="2023"/>
+            <input type="number" set="any" name="anneeSortieFilm" min="1920" max="2030" placeholder="2023" required/>
         </label>
     </p>
     <p>
         <label>
             Durée (en minutes):
-            <input type="number" set="any" min="30" max="360" name="dureeFilm" placeholder="120"/>
+            <input type="number" set="any" min="30" max="360" name="dureeFilm" placeholder="120" required/>
         </label>
     </p>
     <p>
         <label>
             Note:
-            <input type="number" set="any" min="0" max="5" name="noteFilm"/>/5
+            <input type="number" set="any" min="0" max="5" name="noteFilm" required/>/5
         </label>
     </p>
     <p>
         <label>
             URL de l'Affiche :
-            <input type="text" name="afficheFilm" placeholder="Collez votre url"/>
+            <input type="text" name="afficheFilm" placeholder="Collez votre url" required/>
         </label>
     </p>
     <p>
         <label>
-            Synopsys :
-            <textarea name="synopsisFilm" rows="5"></textarea>
+            Synopsys :<br>
+            <textarea name="synopsisFilm" rows="5" required></textarea>
         </label>
     </p>
     <!-------->
@@ -63,13 +63,22 @@ $fetchReals = $requeteRealsFilm->fetchAll();
     <!-------->
     <p>
     <fieldset>
-                <legend>Genres</legend>
-                <?php
-                foreach($fetchGenres as $genre){
-                echo '<input type="checkbox" name="nomGenre" value="'.$genre['id_genre'].'"/>';
-                }
-                ?>
-                
+        <legend>Genres</legend>
+        <?php
+        //les [] après le name permettent de mettre les données dans un tableau
+        foreach ($fetchGenres as $genre) {
+            echo '<input type="checkbox" name="idGenre[]" value="'. $genre['id_genre'].'"/>' . $genre['libelle_genre'] . '<br/>';
+        }
+        //traitement de la valeur des checkbox
+        if(isset($_POST['idGenre']))//si la calse est cochée
+            {
+            foreach($_POST['idGenre'] as $valeur)//et pour chaque case cochée, je crée une valeur(ici id en value)
+            {
+                echo $valeur ."<br>";//recupere la valeur dans le post
+            }
+            }
+        ?>
+
     </fieldset>
     </p>
     <!----attribut "name" qui permettra de vérifier côté serveur que le formulaire a bien été validé par l'utilisateur.------>
