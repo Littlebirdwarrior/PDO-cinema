@@ -16,7 +16,7 @@ class GenreController
 
         //*Ajout Genre (id généré automatiquement)
         $addGenreRequest = $pdo->prepare("
-        INSERT INTO genre (libelleGenre) 
+        INSERT INTO genre (libelle_genre) 
         VALUES (:libelleGenre)
         ");
 

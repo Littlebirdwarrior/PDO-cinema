@@ -82,8 +82,8 @@ class ActeurController {
         //je filtre les données pour éviter les attaques par injection de code malveillant
         $prenom = filter_input(INPUT_POST, "prenomAct", FILTER_SANITIZE_SPECIAL_CHARS);
         $nom = filter_input(INPUT_POST, "nomAct", FILTER_SANITIZE_SPECIAL_CHARS);
-        $sexe = $_POST["sexeAct"];
-        $dateNaissance = $_POST["dateNaissanceAct"];
+        $sexe = filter_input(INPUT_POST, "sexeAct", FILTER_SANITIZE_SPECIAL_CHARS);
+        $dateNaissance = filter_input(INPUT_POST, "dateNaissanceAct", FILTER_SANITIZE_SPECIAL_CHARS);
 
         //Je prépare la requete sql en ciblant la bonne table
         /*la requête SQL est préparée pour insérer les données filtrées 

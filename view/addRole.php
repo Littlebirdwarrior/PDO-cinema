@@ -2,7 +2,7 @@
 ob_start();
 ?>
 
-<form action="traitement.php?action=addRole.php" method="post" enctype="multipart/form-data"> <!---ici, php, action : cible du form en php, fichier a atteindre lors du post http (method), envois variable ds autre page, ici, T.A--->
+<form action="index.php?action=addRole" method="post" enctype="multipart/form-data"> <!---ici, php, action : cible du form en php, fichier a atteindre lors du post http (method), envois variable ds autre page, ici, T.A--->
     <h2>Ajouter un role à votre BDD</h2>
     
     <p>

@@ -3,7 +3,7 @@ ob_start();
 ?>
 
 
-<form action="traitement.php?action=addCasting.php" method="post" enctype="multipart/form-data"> <!---ici, php, action : cible du form en php, fichier a atteindre lors du post http (method), envois variable ds autre page, ici, T.A--->
+<form action="index.php?action=addCasting" method="post" enctype="multipart/form-data"> <!---ici, php, action : cible du form en php, fichier a atteindre lors du post http (method), envois variable ds autre page, ici, T.A--->
     <h2>Ajouter un casting à votre BDD</h2>
     
     <p>

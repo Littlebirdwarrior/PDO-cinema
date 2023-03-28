@@ -64,7 +64,7 @@ class RoleController
         $pdo = Connect::seConnecter();
 
         //filtre
-        $nomRole = filter_input(INPUT_POST, "role", FILTER_SANITIZE_SPECIAL_CHARS);
+        $nomRole = filter_input(INPUT_POST, "nomRole", FILTER_SANITIZE_SPECIAL_CHARS);
 
         //*Ajout Role (id généré automatiquement)
         $addRoleRequest = $pdo->prepare("
