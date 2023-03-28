@@ -67,12 +67,12 @@ $fetchReals = $requeteRealsFilm->fetchAll();
         <?php
         //les [] après le name permettent de mettre les données dans un tableau
         foreach ($fetchGenres as $genre) {
-            echo '<input type="checkbox" name="idGenre[]" value="'. $genre['id_genre'].'"/>' . $genre['libelle_genre'] . '<br/>';
+            echo '<input type="checkbox" name="idGenres[]" value="'. $genre['id_genre'].'"/>' . $genre['libelle_genre'] . '<br/>';
         }
         //traitement de la valeur des checkbox
-        if(isset($_POST['idGenre']))//si la calse est cochée
+        if(isset($_POST['idGenres']))//si la calse est cochée
             {
-            foreach($_POST['idGenre'] as $valeur)//et pour chaque case cochée, je crée une valeur(ici id en value)
+            foreach($_POST['idGenres'] as $valeur)//et pour chaque case cochée, je crée une valeur(ici id en value)
             {
                 echo $valeur ."<br>";//recupere la valeur dans le post
             }

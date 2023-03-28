@@ -208,21 +208,25 @@ class CinemaController
 
             //Après aver vérifié si les checkbox sont cochée : cf view addFilm
             //Ce filtre convertis les string en int 
+            $idGenres = filter_input(INPUT_POST, "idGenres", FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
 
             //On récupère le dernier ID film rentré dans la BDD
             $idFilm = $pdo->lastInsertId();
+            
+            //var_dump($_POST); die;
 
             $requeteAddGenres = $pdo->prepare("
-                INSERT INTO genre_film (id_film, id_genre)
-                VALUES (:idFilm, :idGenre)
-                ");
-            
-            //var_dump($requeteAddGenres); die;
+            INSERT INTO genre_film (id_film, id_genre)
+            VALUES (:idFilm, :idGenre)
+            ");
 
-            $requeteAddGenres->execute([
+            //Ici, je fais une boucle pour envoyé l'idGenre 
+            foreach($idGenres as $idGenre) {
+                $requeteAddGenres->execute([
                     "idFilm" => $idFilm,
                     "idGenre" => $idGenre
             ]);
+            }
         }
 
         require "view/addFilm.php";
