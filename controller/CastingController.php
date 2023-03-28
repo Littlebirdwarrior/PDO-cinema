@@ -18,8 +18,9 @@ class CastingController {
             f.titre_film,
             f.id_film
         FROM 
-            casting c
-            INNER JOIN film f ON f.id_film = c.id_film
+            film f
+        GROUP BY
+            f.id_film
         ORDER BY
             f.titre_film ASC
         ');
@@ -31,11 +32,10 @@ class CastingController {
             p.prenom_personne,
             p.nom_personne
         FROM
-            casting c
-            INNER JOIN acteur a ON a.id_acteur = c.id_acteur
+            acteur a
             INNER JOIN personne p ON p.id_personne = a.id_personne
         GROUP BY
-            c.id_acteur
+            a.id_acteur
         ORDER BY
             p.nom_personne, p.prenom_personne ASC
         ');
@@ -46,8 +46,9 @@ class CastingController {
             r.id_role,
             r.nom_role
         FROM
-            casting c
-            INNER JOIN ROLE r ON r.id_role = c.id_role
+            role r
+        GROUP BY
+            r.id_role
         ORDER BY
             r.nom_role ASC
         ');
@@ -59,6 +60,15 @@ class CastingController {
             $pdo = Connect::seConnecter();
             
             //filtre
+            /*Il existe 2 types de filtres de base : les filtres de validation, 
+            qui renvoient la valeur qu'on leur a donné ou false, et les filtres de nettoyage 
+            ("sanitize") qui renvoient la valeur qu'on leur a donné privée de certains éléments. 
+            FILTER_VALIDATE_URL renverra false si une URL contient des caractères incompatibles, 
+            alors que FILTER_SANITIZE_URL retirera les caractères interdits et renverra l'URL ainsi nettoyée.
+            NB : ici, le validate transforme les string en int
+            Source : https://zestedesavoir.com/tutoriels/295/les-filtres-en-php/
+            * */
+
             $roleId = filter_input(INPUT_POST, "roleId", FILTER_VALIDATE_INT);
             $acteurId = filter_input(INPUT_POST, "acteurId", FILTER_VALIDATE_INT);
             $filmId = filter_input(INPUT_POST, "filmId", FILTER_VALIDATE_INT);

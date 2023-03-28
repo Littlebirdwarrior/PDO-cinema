@@ -14,7 +14,7 @@ $fetchRoles = $requeteSelectRoles->fetchAll();
     <p>
         <label>
             Acteur
-            <select type="text" name="acteurId" required>
+            <select name="acteurId" required>
             <?php 
             //Affichage des films
             foreach ($fetchActeurs as $acteur) {
@@ -28,7 +28,7 @@ $fetchRoles = $requeteSelectRoles->fetchAll();
     <p>
         <label>
             Film
-            <select type="text" name="filmId" required>
+            <select name="filmId" required>
             <?php 
             //Affichage des films
             foreach ($fetchFilms as $film) {
@@ -42,7 +42,7 @@ $fetchRoles = $requeteSelectRoles->fetchAll();
     <p>
     <label>
             Role
-            <select type="text" name="roleId" required>
+            <select name="roleId" required>
             <?php 
             //Affichage des roles
             foreach ($fetchRoles as $role) {
