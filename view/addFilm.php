@@ -1,9 +1,11 @@
 <?php
 ob_start();
+?>
 
+<?php 
 //mes requetes
 $fetchGenres = $requeteGenresFilm->fetchAll();
-echo 'test3'; die;
+$fetchReals = $requeteRealsFilm->fetchAll();
 ?>
 
 <form action="index.php?action=addFilm" method="post" enctype="multipart/form-data"> <!---ici, php, action : cible du form en php, fichier a atteindre lors du post http (method), envois variable ds autre page, ici, T.A--->
@@ -35,6 +37,19 @@ echo 'test3'; die;
                 Synopsys :
                 <textarea name="synopsysFilm" rows="5"></textarea>
             </label>
+            <!-------->
+            <label>
+                Réalisateur
+                <select name="idRealisateur" required>
+                <?php 
+                //Affichage des films
+                foreach ($fetchReals  as $real) {
+                    echo "<option value=".$real['id_realisateur'].">".$real['nom_personne']. ' '.$real['prenom_personne']."</option>";
+                }
+                ?>
+                </select>
+            </label>
+            <!-------->
             <fieldset>
                 <legend>Genres</legend>
                 <?php 
@@ -42,7 +57,7 @@ echo 'test3'; die;
                         echo '<input type="checkbox" name="nomGenre" value="'.$genre['id_genre'].'"/>';
                     }
                 ?>
-                <input type="checkbox" name="nomGenre" value=""/>
+                
             </fieldset>
 
             <!----attribut "name" qui permettra de vérifier côté serveur que le formulaire a bien été validé par l'utilisateur.------>

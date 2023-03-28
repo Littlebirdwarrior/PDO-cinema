@@ -3,6 +3,7 @@
 //un seul fichier pour le moment également qui contiendra l'ensemble des requêtes dans les fonctions en relation avec les vues 
 
 namespace Controller;
+
 use Model\Connect;
 
 //Mon controlleur (c'est une classe dont on crée des instances)
@@ -10,9 +11,9 @@ use Model\Connect;
 /** 
  Error: Call to a member function query() on string 
  * Le message signifie que tu appelles la fonction query sur une chaîne de caractères.
-* Comme tu l'appelles par $bdd->query($query), cela signifie (si l'erreur est bien à cette ligne) que $bdd est une chaîne, et non pas une connexion à mysql.
-* Montrer le code où est définie la variable $bdd ?
-*/
+ * Comme tu l'appelles par $bdd->query($query), cela signifie (si l'erreur est bien à cette ligne) que $bdd est une chaîne, et non pas une connexion à mysql.
+ * Montrer le code où est définie la variable $bdd ?
+ */
 class CinemaController
 {
     //lister les films
@@ -46,7 +47,7 @@ class CinemaController
          FROM realisateur r
             INNER JOIN personne p ON r.id_personne = p.id_personne;
             ");
-        
+
         //Libelle genre
         $pdo = Connect::seConnecter();
         $requeteFormListGenre = $pdo->query("
@@ -118,52 +119,105 @@ class CinemaController
             INNER JOIN genre g ON gf.id_genre = g.id_genre
         WHERE gf.id_film = :id
         ");
-        
+
         $requeteDetailGenre->execute(["id" => $id]);
-          
+
         require "view/detailFilm.php";
     }
 
-//Formulaire d'ajout des films
-        public function addFilm() {
-            
-            if (isset($_POST['submitFilm'])) {
-                $pdo = Connect::seConnecter();
+    //Formulaire d'ajout des films
+    public function addFilm()
+    {
 
-                
-                //Fitrage des données
-                //Les filtre pour eviter les failles XSS
-                $titreFilm = filter_input(INPUT_POST, "titreFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                $anneeSortieFilm = filter_input(INPUT_POST, "anneeSortieFilm", FILTER_VALIDATE_INT);//convertis tous en int
-                $dureeFilm = filter_input(INPUT_POST, "dureeFilm", FILTER_VALIDATE_INT);
-                $noteFilm = filter_input(INPUT_POST, "noteFilm", FILTER_VALIDATE_INT);
-                $afficheFilm = filter_input(INPUT_POST, "afficheFilm", FILTER_VALIDATE_URL);
-                $synopsisFilm = filter_input(INPUT_POST, "synopsisFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS);//sanitize moins sévère que le validate, filtre mais ne remplace pas
+        if (isset($_POST['submitFilm'])) {
+            //Connexion BDD
+            $pdo = Connect::seConnecter();
 
-                //ici prépare les films
-                $requeteAddFilm = $pdo->prepare("
-                INSERT INTO film (titre_film, annee_sortie_film, duree_film,  note_film, id_realisateur, genre_film, affiche_film, synopsis_film,) 
-                VALUES (:titreFilm, :anneeSortieFilm,  :dureeFilm,  :notefilm, :idRealisateur, :genreFilm, :afficheFilm, :synopsisFilm, )
+            //*Afficher les genres
+            //Lister id et nom de la table genre (nom_genre: genre_film -> genre)
+            $requeteGenresFilm = $pdo->query("
+            SELECT DISTINCT
+                gf.id_genre,
+                g.libelle_genre
+            FROM
+                genre_film gf
+                INNER JOIN genre g ON gf.id_genre = g.id_genre
+            ");
+
+            //*Afficher les realisateurs
+            //Lister id_real et nom de la table film (nom et prenom : realisateur -> personne)
+            $requeteRealsFilm = $pdo->query("
+            SELECT DISTINCT
+                r.id_realisateur,
+                p.nom_personne,
+                p.prenom_personne
+            FROM
+                realisateur r
+                INNER JOIN film f ON f.id_realisateur = r.id_realisateur
+                INNER JOIN personne p ON p.id_personne = r.id_personne
+            ");
+
+            //*Ajouter un film
+            //Fitrage des données
+            //Les filtre pour eviter les failles XSS
+            $titreFilm = filter_input(INPUT_POST, "titreFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $anneeSortieFilm = filter_input(INPUT_POST, "anneeSortieFilm", FILTER_VALIDATE_INT); //convertis tous en int
+            $dureeFilm = filter_input(INPUT_POST, "dureeFilm", FILTER_VALIDATE_INT);
+            $noteFilm = filter_input(INPUT_POST, "noteFilm", FILTER_VALIDATE_INT);
+            $afficheFilm = filter_input(INPUT_POST, "afficheFilm", FILTER_VALIDATE_URL);
+            $synopsisFilm = filter_input(INPUT_POST, "synopsisFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS); //sanitize moins sévère que le validate, filtre mais ne remplace pas
+            //Les id récuperer dans le checkbox et les select
+            $idRealisateur = filter_input(INPUT_POST, "idRealisateur", FILTER_VALIDATE_INT);
+            $idGenre = filter_input(INPUT_POST, "idGenre", FILTER_VALIDATE_INT);
+
+
+            //ici prépare les films
+            $requeteAddFilm = $pdo->prepare("
+                INSERT INTO film (
+                    titre_film, 
+                    annee_sortie_film, 
+                    duree_film,  
+                    note_film, 
+                    affiche_film, 
+                    synopsis_film,
+                    id_realisateur, 
+                    id_genre
+                    ) 
+                VALUES (
+                    :titreFilm, 
+                    :anneeSortieFilm,  
+                    :dureeFilm,  
+                    :notefilm, 
+                    :afficheFilm, 
+                    :synopsisFilm,
+                    :idRealisateur, 
+                    :idGenre
+                    )
                 ");
-                
-                //Après avoir filtrer les champs, il sont vérifiés en vrai ou false
-                
 
-                //On récupère le dernier ID rentré dans la BDD
-                $idFilm = $pdo -> lastInsertId();
+            //On ajoute les realisateurs
+            $requeteAddReal = $pdo->prepare("
+                INSERT INTO film (id_realisateur)
+                VALUES (:id_realisateur)
+                ");
+            $requeteAddReal->execute([
+                "id_realisateur" => $idRealisateur
+            ]);
+            
+            //Après avoir filtrer les champs genre, il sont vérifiés en vrai ou false
 
-                $requeteGenresFilm = $pdo->prepare("
+            //On récupère le dernier ID rentré dans la BDD
+            $idFilm = $pdo->lastInsertId();
+
+            $requeteAddGenres = $pdo->prepare("
                 INSERT INTO genre_film (id_film, id_genre)
                 VALUES (:id, :genre)
                 ");
-                $requeteGenresFilm->execute([
-                    "id" => $idFilm
-                ]);
-                
-                require "view/addFilm.php";
-            }
-        
-   }
+            $requeteAddGenres->execute([
+                "id" => $idFilm
+            ]);
+        }
 
-
+        require "view/addFilm.php";
+    }
 }//fin controller
