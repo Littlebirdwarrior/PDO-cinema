@@ -4,7 +4,7 @@ ob_start();
 
 <?php
 //mes requetes
-//$fetchGenres = $requeteGenresFilm->fetchAll();
+$fetchGenres = $requeteGenresFilm->fetchAll();
 $fetchReals = $requeteRealsFilm->fetchAll();
 ?>
 
@@ -12,37 +12,37 @@ $fetchReals = $requeteRealsFilm->fetchAll();
     <p>
         <label>
             Titre :
-            <input type="text" name="titreFilm" placeholder="Titre du film">
+            <input type="text"  set="any" name="titreFilm" placeholder="Titre du film"/>
         </label>
     </p>
     <p>
         <label>
             Année de sortie :
-            <input type="number" set="any" name="anneeSortieFilm" min="1920" max="2030" placeholder="2023">
+            <input type="number" set="any" name="anneeSortieFilm" min="1920" max="2030" placeholder="2023"/>
         </label>
     </p>
     <p>
         <label>
             Durée (en minutes):
-            <input type="number" set="any" min="0" max="360" name="dureeFilm" placeholder="120">
+            <input type="number" set="any" min="30" max="360" name="dureeFilm" placeholder="120"/>
         </label>
     </p>
     <p>
         <label>
             Note:
-            <input type="number" set="any" min="0" max="5" name="noteFilm">/5
+            <input type="number" set="any" min="0" max="5" name="noteFilm"/>/5
         </label>
     </p>
     <p>
         <label>
             URL de l'Affiche :
-            <input type="text" name="afficheFilm" placeholder="Collez votre url">
+            <input type="text" name="afficheFilm" placeholder="Collez votre url"/>
         </label>
     </p>
     <p>
         <label>
             Synopsys :
-            <textarea name="synopsysFilm" rows="5"></textarea>
+            <textarea name="synopsisFilm" rows="5"></textarea>
         </label>
     </p>
     <!-------->
@@ -61,16 +61,17 @@ $fetchReals = $requeteRealsFilm->fetchAll();
         </label>
     </p>
     <!-------->
-    <!---<fieldset>
+    <p>
+    <fieldset>
                 <legend>Genres</legend>
                 <?php
-                //foreach($fetchGenres as $genre){
-                //echo '<input type="checkbox" name="nomGenre" value="'.$genre['id_genre'].'"/>';
-                //}
+                foreach($fetchGenres as $genre){
+                echo '<input type="checkbox" name="nomGenre" value="'.$genre['id_genre'].'"/>';
+                }
                 ?>
                 
-            </fieldset>--->
-
+    </fieldset>
+    </p>
     <!----attribut "name" qui permettra de vérifier côté serveur que le formulaire a bien été validé par l'utilisateur.------>
     <input class="" type="submit" name="submitFilm">
 

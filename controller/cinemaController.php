@@ -168,8 +168,8 @@ class CinemaController
             $synopsisFilm = filter_input(INPUT_POST, "synopsisFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS); //sanitize moins sévère que le validate, filtre mais ne remplace pas
             //Les id récuperer dans le checkbox et les select
             $idRealisateur = filter_input(INPUT_POST, "idRealisateur", FILTER_VALIDATE_INT);
-            //$idGenre = filter_input(INPUT_POST, "idGenre", FILTER_VALIDATE_INT);
 
+            // var_dump($titreFilm, $anneeSortieFilm, $dureeFilm, $noteFilm, $synopsisFilm, $afficheFilm, $idRealisateur); die;
 
             //ici prépare les films
             $requeteAddFilm = $pdo->prepare("
@@ -177,44 +177,48 @@ class CinemaController
                     titre_film, 
                     annee_sortie_film, 
                     duree_film,  
+                    synopsis_film,
                     note_film, 
                     affiche_film, 
-                    synopsis_film,
-                    id_realisateur, 
-                    
+                    id_realisateur
                     ) 
                 VALUES (
                     :titreFilm, 
                     :anneeSortieFilm,  
                     :dureeFilm,  
-                    :notefilm, 
-                    :afficheFilm, 
                     :synopsisFilm,
-                    :idRealisateur, 
+                    :noteFilm, 
+                    :afficheFilm, 
+                    :idRealisateur
                     )
                 ");
 
-            //On ajoute les realisateurs
-            $requeteAddReal = $pdo->prepare("
-                INSERT INTO film (id_realisateur)
-                VALUES (:id_realisateur)
-                ");
-            $requeteAddReal->execute([
-                "id_realisateur" => $idRealisateur
+            $requeteAddFilm->execute([
+                "titreFilm" => $titreFilm,
+                "anneeSortieFilm" => $anneeSortieFilm,
+                "dureeFilm" => $dureeFilm,
+                "synopsisFilm" => $synopsisFilm,
+                "noteFilm" => $noteFilm,
+                "afficheFilm" => $afficheFilm,
+                "idRealisateur" => $idRealisateur
             ]);
-            
+
+            //*recupérer Genre
             //Après avoir filtrer les champs genre, il sont vérifiés en vrai ou false
+
+            //Je filtre l'id
+            $idGenre = filter_input(INPUT_POST, "idGenre", FILTER_VALIDATE_INT);
 
             //On récupère le dernier ID rentré dans la BDD
             $idFilm = $pdo->lastInsertId();
 
-            $requeteAddGenres = $pdo->prepare("
-                INSERT INTO genre_film (id_film, id_genre)
-                VALUES (:id, :genre)
-                ");
-            $requeteAddGenres->execute([
-                "id" => $idFilm
-            ]);
+            // $requeteAddGenres = $pdo->prepare("
+            //     INSERT INTO genre_film (id_film, id_genre)
+            //     VALUES (:id, :genre)
+            //     ");
+            // $requeteAddGenres->execute([
+            //     "id" => $idFilm
+            // ]);
         }
 
         require "view/addFilm.php";
