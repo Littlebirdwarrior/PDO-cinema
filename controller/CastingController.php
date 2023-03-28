@@ -59,9 +59,9 @@ class CastingController {
             $pdo = Connect::seConnecter();
             
             //filtre
-            $roleId = filter_input(INPUT_POST, (int)"roleId", FILTER_VALIDATE_INT);
-            $acteurId = filter_input(INPUT_POST, (int)"acteurId", FILTER_VALIDATE_INT);
-            $filmId = filter_input(INPUT_POST, (int)"filmId", FILTER_VALIDATE_INT);
+            $roleId = filter_input(INPUT_POST, "roleId", FILTER_VALIDATE_INT);
+            $acteurId = filter_input(INPUT_POST, "acteurId", FILTER_VALIDATE_INT);
+            $filmId = filter_input(INPUT_POST, "filmId", FILTER_VALIDATE_INT);
 
             //Preparation requete en ciblant casting
             $addCastingRequest = $pdo ->prepare("
