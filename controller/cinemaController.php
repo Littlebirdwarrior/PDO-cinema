@@ -127,35 +127,35 @@ class CinemaController
 
     //Formulaire d'ajout des films
     public function addFilm()
+
     {
+        //Connexion BDD
+        $pdo = Connect::seConnecter();
+
+        //*Afficher les genres
+        //Lister id et nom de la table genre (nom_genre: genre_film -> genre)
+        $requeteGenresFilm = $pdo->query("
+        SELECT DISTINCT
+            g.id_genre,
+            g.libelle_genre
+        FROM
+            genre g
+        ");
+
+        //*Afficher les realisateurs
+        //Lister id_real et nom de la table film (nom et prenom : realisateur -> personne)
+        $requeteRealsFilm = $pdo->query("
+        SELECT DISTINCT
+            r.id_realisateur,
+            p.nom_personne,
+            p.prenom_personne
+        FROM
+            realisateur r
+            INNER JOIN film f ON f.id_realisateur = r.id_realisateur
+            INNER JOIN personne p ON p.id_personne = r.id_personne
+        ");
 
         if (isset($_POST['submitFilm'])) {
-            //Connexion BDD
-            $pdo = Connect::seConnecter();
-
-            //*Afficher les genres
-            //Lister id et nom de la table genre (nom_genre: genre_film -> genre)
-            $requeteGenresFilm = $pdo->query("
-            SELECT DISTINCT
-                gf.id_genre,
-                g.libelle_genre
-            FROM
-                genre_film gf
-                INNER JOIN genre g ON gf.id_genre = g.id_genre
-            ");
-
-            //*Afficher les realisateurs
-            //Lister id_real et nom de la table film (nom et prenom : realisateur -> personne)
-            $requeteRealsFilm = $pdo->query("
-            SELECT DISTINCT
-                r.id_realisateur,
-                p.nom_personne,
-                p.prenom_personne
-            FROM
-                realisateur r
-                INNER JOIN film f ON f.id_realisateur = r.id_realisateur
-                INNER JOIN personne p ON p.id_personne = r.id_personne
-            ");
 
             //*Ajouter un film
             //Fitrage des données
@@ -168,7 +168,7 @@ class CinemaController
             $synopsisFilm = filter_input(INPUT_POST, "synopsisFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS); //sanitize moins sévère que le validate, filtre mais ne remplace pas
             //Les id récuperer dans le checkbox et les select
             $idRealisateur = filter_input(INPUT_POST, "idRealisateur", FILTER_VALIDATE_INT);
-            $idGenre = filter_input(INPUT_POST, "idGenre", FILTER_VALIDATE_INT);
+            //$idGenre = filter_input(INPUT_POST, "idGenre", FILTER_VALIDATE_INT);
 
 
             //ici prépare les films
@@ -181,7 +181,7 @@ class CinemaController
                     affiche_film, 
                     synopsis_film,
                     id_realisateur, 
-                    id_genre
+                    
                     ) 
                 VALUES (
                     :titreFilm, 
@@ -191,7 +191,6 @@ class CinemaController
                     :afficheFilm, 
                     :synopsisFilm,
                     :idRealisateur, 
-                    :idGenre
                     )
                 ");
 
