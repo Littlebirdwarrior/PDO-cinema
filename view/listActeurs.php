@@ -7,8 +7,6 @@ $fetchActeurs = $requeteListActeurs->fetchAll();
 
 ?>
 
-
-
     <!---Compte les acteurs-->
     <p>Il y a <?=$requeteListActeurs-> rowCount()?> acteurs</p>
     <a href="index.php?action=addActeur">Ajouter un acteur</a>

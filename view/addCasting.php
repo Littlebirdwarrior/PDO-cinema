@@ -2,15 +2,25 @@
 ob_start();
 ?>
 
+<?php
+//*Récupérer les données depuis le sql
+$fetchFilms = $requeteSelectFilms->fetchAll();
+$fetchActeurs = $requeteSelectActeurs->fetchAll();
+$fetchRoles = $requeteSelectRoles->fetchAll();
+?>
 
-<form action="index.php?action=addCasting" method="post" enctype="multipart/form-data"> <!---ici, php, action : cible du form en php, fichier a atteindre lors du post http (method), envois variable ds autre page, ici, T.A--->
-    <h2>Ajouter un casting à votre BDD</h2>
-    
+
+<form action="index.php?action=addCasting" method="post" enctype="multipart/form-data"> <!---ici, php, action : cible du form en php, fichier a atteindre lors du post http (method), envois variable ds autre page, ici, T.A--->    
     <p>
         <label>
             Acteur
             <select type="text" name="acteurId" required>
-                --<option value="femme">acteur un</option>--
+            <?php 
+            //Affichage des films
+            foreach ($fetchActeurs as $acteur) {
+                echo "<option value=".$acteur['id_acteur'].">".$acteur['nom_personne']. ' '.$acteur['prenom_personne']."</option>";
+            }
+            ?>
             </select>
         </label>
     </p>
@@ -19,8 +29,12 @@ ob_start();
         <label>
             Film
             <select type="text" name="filmId" required>
-                --<option value="femme">film1</option>--
-
+            <?php 
+            //Affichage des films
+            foreach ($fetchFilms as $film) {
+                echo "<option value=".$film['id_film'].">".$film['titre_film']."</option>";
+            }
+            ?>
             </select>
         </label>
     </p>
@@ -29,8 +43,12 @@ ob_start();
     <label>
             Role
             <select type="text" name="filmId" required>
-                --<option value="femme">role</option>--
-
+            <?php 
+            //Affichage des roles
+            foreach ($fetchRoles as $role) {
+                echo "<option value=".$role['id_role'].">".$role['nom_role']."</option>";
+            }
+            ?>
             </select>
         </label>
     </p>
