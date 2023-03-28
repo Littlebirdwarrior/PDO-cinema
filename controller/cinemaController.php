@@ -126,17 +126,19 @@ class CinemaController
 
 //Formulaire d'ajout des films
         public function addFilm() {
-            if (isset($_POST['submit'])) {
-                //Fitrage des données
+            
+            if (isset($_POST['submitFilm'])) {
                 $pdo = Connect::seConnecter();
 
+                
+                //Fitrage des données
                 //Les filtre pour eviter les failles XSS
                 $titreFilm = filter_input(INPUT_POST, "titreFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                $anneeSortieFilm = filter_input(INPUT_POST, "anneeSortieFilm", FILTER_VALIDATE_INT);
+                $anneeSortieFilm = filter_input(INPUT_POST, "anneeSortieFilm", FILTER_VALIDATE_INT);//convertis tous en int
                 $dureeFilm = filter_input(INPUT_POST, "dureeFilm", FILTER_VALIDATE_INT);
                 $noteFilm = filter_input(INPUT_POST, "noteFilm", FILTER_VALIDATE_INT);
                 $afficheFilm = filter_input(INPUT_POST, "afficheFilm", FILTER_VALIDATE_URL);
-                $synopsisFilm = filter_input(INPUT_POST, "synopsisFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $synopsisFilm = filter_input(INPUT_POST, "synopsisFilm", FILTER_SANITIZE_FULL_SPECIAL_CHARS);//sanitize moins sévère que le validate, filtre mais ne remplace pas
 
                 //ici prépare les films
                 $requeteAddFilm = $pdo->prepare("
@@ -150,15 +152,17 @@ class CinemaController
                 //On récupère le dernier ID rentré dans la BDD
                 $idFilm = $pdo -> lastInsertId();
 
-                $requeteGenreFilm = $pdo->prepare("
-                INSERT INTO appartenir (id_film, id_genre)
+                $requeteGenresFilm = $pdo->prepare("
+                INSERT INTO genre_film (id_film, id_genre)
                 VALUES (:id, :genre)
                 ");
-                $requeteGenreFilm->execute([
-                    "id" => $idFilm, 
-                    "genre" => $nomGenre]);
+                $requeteGenresFilm->execute([
+                    "id" => $idFilm
+                ]);
+                
+                require "view/addFilm.php";
             }
-        header("Location: index.php?action=listFilms");
+        
    }
 
 

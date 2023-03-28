@@ -34,8 +34,8 @@ if(isset($_GET["action"])){
             $ctrlCinema ->listFilms(); break;
         case "detailFilm" :
             $ctrlCinema ->detailFilm($id); break;
-        // case "addFilm" 
-        //     $ctrlCinema ->addFilm(); break;
+        case "addFilm" :
+            $ctrlCinema ->addFilm(); break;
             
         //Acteurs
         case "listActeurs":

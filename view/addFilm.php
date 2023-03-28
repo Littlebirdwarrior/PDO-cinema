@@ -1,11 +1,13 @@
 <?php
 ob_start();
+
+//mes requetes
+$fetchGenres = $requeteGenresFilm->fetchAll();
+echo 'test3'; die;
 ?>
 
-<form action="traitement.php?action=addFilm.php" method="post" enctype="multipart/form-data"> <!---ici, php, action : cible du form en php, fichier a atteindre lors du post http (method), envois variable ds autre page, ici, T.A--->
-        <h2>Ajouter un film à votre BDD</h2>
+<form action="index.php?action=addFilm" method="post" enctype="multipart/form-data"> <!---ici, php, action : cible du form en php, fichier a atteindre lors du post http (method), envois variable ds autre page, ici, T.A--->
 
-            <!---attribut "titre", ce qui va permettre à la requête de classer le contenu de la saisie dans des clés portant le nom choisi.---->
             <label>
                 Titre :
                 <input type="text" name="titreFilm">
@@ -33,9 +35,18 @@ ob_start();
                 Synopsys :
                 <textarea name="synopsysFilm" rows="5"></textarea>
             </label>
+            <fieldset>
+                <legend>Genres</legend>
+                <?php 
+                foreach($fetchGenres as $genre){
+                        echo '<input type="checkbox" name="nomGenre" value="'.$genre['id_genre'].'"/>';
+                    }
+                ?>
+                <input type="checkbox" name="nomGenre" value=""/>
+            </fieldset>
 
             <!----attribut "name" qui permettra de vérifier côté serveur que le formulaire a bien été validé par l'utilisateur.------>
-            <input class="" type="submit" name="submit" value="Ajouter le film">
+            <input class="" type="submit" name="submitFilm">
 
     </form>
     
@@ -46,6 +57,6 @@ ob_start();
 
 <?php
 $titre = "Ajouter un film";
-$titre_secondaire= "Ajouter un film";
-$contenu = ob_get_clean();//envois le tempons dans la session
+$titre_secondaire= "Ajouter un film à votre BDD";
+$contenu = ob_get_clean();
 require "view/template.php";
