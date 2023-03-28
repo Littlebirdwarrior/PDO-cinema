@@ -42,7 +42,7 @@ $fetchRoles = $requeteSelectRoles->fetchAll();
     <p>
     <label>
             Role
-            <select type="text" name="filmId" required>
+            <select type="text" name="roleId" required>
             <?php 
             //Affichage des roles
             foreach ($fetchRoles as $role) {
